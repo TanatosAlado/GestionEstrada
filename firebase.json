@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/gestion-estrada",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
