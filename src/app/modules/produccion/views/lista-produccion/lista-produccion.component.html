@@ -1,0 +1,35 @@
+<div class="contenedor">
+  <h2>Producciones</h2>
+
+  <button mat-raised-button color="primary" (click)="abrirModal()" class="btn-cargar">
+    + Nueva Producción
+  </button>
+
+  <table mat-table [dataSource]="producciones" class="mat-elevation-z8 full-width-table">
+
+    <!-- Fecha Column -->
+    <ng-container matColumnDef="fecha">
+      <th mat-header-cell *matHeaderCellDef> Fecha </th>
+      <td mat-cell *matCellDef="let p"> {{p.fecha | date}} </td>
+    </ng-container>
+
+    <!-- Operador Column -->
+    <ng-container matColumnDef="operador">
+      <th mat-header-cell *matHeaderCellDef> Operador </th>
+      <td mat-cell *matCellDef="let p"> {{p.operador}} </td>
+    </ng-container>
+
+    <!-- Detalle Column -->
+    <ng-container matColumnDef="detalle">
+      <th mat-header-cell *matHeaderCellDef> Detalle </th>
+      <td mat-cell *matCellDef="let p">
+        {{ obtenerDetalleTexto(p.detalle) }}
+      </td>
+    </ng-container>
+
+    <!-- Header and Row Declarations -->
+    <tr mat-header-row *matHeaderRowDef="['fecha', 'operador', 'detalle']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['fecha', 'operador', 'detalle'];"></tr>
+
+  </table>
+</div>

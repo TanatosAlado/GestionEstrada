@@ -6,6 +6,14 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './modules/auth/auth.module'; 
 import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './modules/home/home.module';
+import { ProduccionModule } from './modules/produccion/produccion.module';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app'; // API modular
+import { provideAuth, getAuth } from '@angular/fire/auth'; // Para Auth (si lo usas)
+import { provideFirestore, getFirestore } from '@angular/fire/firestore'; // Para Firestore (si lo usas)
+import { environment } from 'src/environment/environment';
+import { provideStorage, getStorage } from '@angular/fire/storage';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StockModule } from './modules/stock/stock.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +24,14 @@ import { HomeModule } from './modules/home/home.module';
     AppRoutingModule,
     AuthModule,
     SharedModule,
-    HomeModule
+    HomeModule,
+    ProduccionModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage()), // Solo si usas Firestore
+    BrowserAnimationsModule,
+    StockModule
   ],
   providers: [],
   bootstrap: [AppComponent]

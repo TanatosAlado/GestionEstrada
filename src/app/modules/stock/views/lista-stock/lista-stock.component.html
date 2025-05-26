@@ -1,0 +1,17 @@
+<h2>Stock Actual</h2>
+
+<table mat-table [dataSource]="stock" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="tipoBidon">
+    <th mat-header-cell *matHeaderCellDef> Tipo de Bidón </th>
+    <td mat-cell *matCellDef="let element"> {{ element.tipoBidon }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="cantidad">
+    <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+    <td mat-cell *matCellDef="let element"> {{ element.cantidad }} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="['tipoBidon', 'cantidad']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['tipoBidon', 'cantidad'];"></tr>
+</table>
