@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ClienteService } from '../../services/cliente.service';
+import { Cliente } from '../../models/cliente.model';
 import { MatDialog } from '@angular/material/dialog';
-import { PageEvent } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { AltaClienteComponent } from '../alta-cliente/alta-cliente.component';
 
 @Component({
   selector: 'app-lista-cliente',
@@ -9,81 +10,48 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./lista-cliente.component.css']
 })
 export class ListaClienteComponent {
+  clientes: Cliente[] = [];
 
-  public clienteAEliminar: string = ''; 
-  displayedColumns: string[] = ['nombre', 'apellido', 'razonSocial', 'estado', 'acciones'];
-  totalClientes = 0;
-  dataSource = new MatTableDataSource<any>([]);
+  displayedColumns: string[] = ['nombreRazon', 'tipo', 'telefono', 'acciones'];
 
-  constructor(private dialog: MatDialog){
-    
+
+  constructor(private clienteService: ClienteService, private dialog: MatDialog) { }
+
+  ngOnInit(): void {
+    this.cargarClientes();
   }
 
-    abrirRegistro(){
-  
+  cargarClientes() {
+    this.clienteService.obtenerClientes().subscribe(clientes => {
+      this.clientes = clientes;
+    });
   }
 
-    verCliente(cliente: any): void {
-    // this.dialog.open(ClienteDetalleComponent, {
-    //   width: '500px',
-    //   data: cliente
-    // });
+  abrirAltaCliente() {
+    const dialogRef = this.dialog.open(AltaClienteComponent, {
+      width: '600px',
+      maxHeight: '90vh', // ocupa hasta el 90% del alto visible
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.cargarClientes(); // Recargar la lista si se agregó un cliente
+      }
+    });
   }
 
-    openConfirmDialog(cliente: any): void {
-    // this.clienteAEliminar = cliente.id;
-    // const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-    //   width: '400px',
-    //   data: {
-    //     message: `¿Está seguro que desea eliminar este cliente: ${cliente.nombre}?`,
-    //     confirmAction: () => this.eliminarCliente() // Acción a ejecutar si se confirma
-    //   }
-    // });
+  editarCliente(cliente: Cliente) {
+    // Abrir modal o navegar a la pantalla de edición, pasando el cliente seleccionado
+    console.log('Editar cliente', cliente);
+    // Aquí pondrías tu lógica para editar
   }
 
-    eliminarCliente(): void {
-    console.log('Eliminar', this.clienteAEliminar);
-    // LLAMAR AL SERVICIO, SUSCRIBIRSE E INFIRMAR AL USUARIO
+  eliminarCliente(cliente: Cliente) {
+    // Confirmar y eliminar cliente
+    if (confirm(`¿Querés eliminar al cliente ${cliente.nombre || cliente.razonSocial}?`)) {
+      console.log('Eliminar cliente', cliente);
+      // Aquí pondrías la lógica para eliminar
+    }
   }
-
-    editarCliente(cliente: any): void {
-    // const dialogRef = this.dialog.open(ClienteEditarComponent, {
-    //   width: '500px',
-    //   maxHeight: '90vh', 
-    //   data: cliente
-    // });
-  
-    // dialogRef.afterClosed().subscribe(resultado => {
-    //   if (resultado) {
-       
-    //     console.log('Datos actualizados:', resultado);
-    //     this.clientesService.actualizarCliente(resultado.id, resultado)
-    //     .then(() => {
-    //       console.log('Cliente actualizado correctamente en Firebase');
-    //       this.loadClientes();
-    //     })
-    //     .catch(error => {
-    //       console.error('Error al actualizar el cliente:', error);
-    //     });
-    //   }
-    // });
-  }
-
-
-  onPageChange(event: PageEvent) {
-    // if (event.pageIndex > event.previousPageIndex!) {
-    //   // Avanzando
-    //   this.loadClientes(this.clientesService.ultimoCliente);
-    // } else {
-    //   // Retrocediendo aún no implementado (hay que hacer una pila si querés)
-    //   console.log('Retroceder no implementado aún');
-    // }
-  }
-
-    loadTotalClientes(): void {
-    // this.clientesService.getClientesCount().subscribe(total => {
-    //   this.totalClientes = total;
-    // });
-  }
-
 }

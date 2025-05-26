@@ -14,6 +14,9 @@ import { environment } from 'src/environment/environment';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StockModule } from './modules/stock/stock.module';
+import { ClientesModule } from './modules/clientes/clientes.module';
+import { CargasModule } from './modules/cargas/cargas.module';
+import { RepartidoresModule } from './modules/repartidores/repartidores.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,10 @@ import { StockModule } from './modules/stock/stock.module';
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()), // Solo si usas Firestore
     BrowserAnimationsModule,
-    StockModule
+    StockModule,
+    ClientesModule,
+    CargasModule,
+    RepartidoresModule
   ],
   providers: [],
   bootstrap: [AppComponent]

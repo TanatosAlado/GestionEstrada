@@ -1,0 +1,23 @@
+form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 16px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+div[style] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button {
+  min-width: 100px;
+}

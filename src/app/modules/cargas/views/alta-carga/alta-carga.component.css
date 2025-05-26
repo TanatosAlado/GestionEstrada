@@ -1,0 +1,31 @@
+.carga-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 600px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.productos-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.producto-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.producto-nombre {
+  flex: 1;
+  font-weight: 500;
+}
+
+.cantidad-input {
+  width: 120px;
+}

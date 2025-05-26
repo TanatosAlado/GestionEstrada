@@ -1,1 +1,78 @@
-<p>alta-cliente works!</p>
+<h2 mat-dialog-title>Nuevo Cliente</h2>
+
+<div mat-dialog-content class="contenido-modal">
+  <form [formGroup]="clienteForm">
+
+    <!-- Tipo de cliente -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Tipo de Cliente</mat-label>
+      <mat-select formControlName="tipoCliente" required (selectionChange)="onTipoClienteChange()">
+        <mat-option value="personal">Personal</mat-option>
+        <mat-option value="empresa">Empresa</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Nombre -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre</mat-label>
+      <input matInput type="text" formControlName="nombre" />
+    </mat-form-field>
+
+    <!-- Apellido (solo personal) -->
+    <mat-form-field *ngIf="clienteForm.get('tipoCliente')?.value === 'personal'" appearance="outline" class="full-width">
+      <mat-label>Apellido</mat-label>
+      <input matInput type="text" formControlName="apellido" />
+    </mat-form-field>
+
+    <!-- Razón Social (solo empresa) -->
+    <mat-form-field *ngIf="clienteForm.get('tipoCliente')?.value === 'empresa'" appearance="outline" class="full-width">
+      <mat-label>Razón Social</mat-label>
+      <input matInput type="text" formControlName="razonSocial" />
+    </mat-form-field>
+
+    <!-- CUIT (solo empresa) -->
+    <mat-form-field *ngIf="clienteForm.get('tipoCliente')?.value === 'empresa'" appearance="outline" class="full-width">
+      <mat-label>CUIT</mat-label>
+      <input matInput type="text" formControlName="cuit" />
+    </mat-form-field>
+
+    <!-- DNI (solo personal) -->
+    <mat-form-field *ngIf="clienteForm.get('tipoCliente')?.value === 'personal'" appearance="outline" class="full-width">
+      <mat-label>DNI</mat-label>
+      <input matInput type="text" formControlName="dni" />
+    </mat-form-field>
+
+    <!-- Teléfono -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Teléfono</mat-label>
+      <input matInput type="tel" formControlName="telefono" />
+    </mat-form-field>
+
+    <!-- Dirección -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Dirección</mat-label>
+      <input matInput type="text" formControlName="direccion" />
+    </mat-form-field>
+
+    <!-- Email -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="mail" />
+    </mat-form-field>
+
+    <!-- Estado -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="estado">
+        <mat-option value="activo">Activo</mat-option>
+        <mat-option value="inactivo">Inactivo</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button color="primary" (click)="guardarCliente()" [disabled]="clienteForm.invalid">Guardar</button>
+</div>

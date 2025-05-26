@@ -8,6 +8,10 @@ import { AltaProduccionComponent } from './modules/produccion/views/alta-producc
 import { ListaProduccionComponent } from './modules/produccion/views/lista-produccion/lista-produccion.component';
 import { DetalleProduccionComponent } from './modules/produccion/views/detalle-produccion/detalle-produccion.component';
 import { ListaStockComponent } from './modules/stock/views/lista-stock/lista-stock.component';
+import { ListaClienteComponent } from './modules/clientes/views/lista-cliente/lista-cliente.component';
+import { AltaClienteComponent } from './modules/clientes/views/alta-cliente/alta-cliente.component';
+import { ListaCargaComponent } from './modules/cargas/views/lista-carga/lista-carga.component';
+import { ListaRepartidoresComponent } from './modules/repartidores/views/lista-repartidores/lista-repartidores.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' }, // cambio de prefix a full
@@ -34,10 +38,29 @@ const routes: Routes = [
     children: [
       { path: 'listaStock', component: ListaStockComponent },
     ]
-  }
-  // Eliminé esta línea para evitar conflicto:
-  // { path: 'produccion', component: ProduccionComponent },
-];
+  },
+  {
+    path: 'clientes',
+    component: ListaClienteComponent,
+    children: [
+      { path: 'altaC', component: AltaClienteComponent },
+    ]
+  },
+  {
+    path: 'cargas',
+    component: ListaCargaComponent,
+    children: [
+      { path: 'altaCarga', component: ListaCargaComponent },
+    ]
+  },
+  {
+    path: 'repartidores',
+    component: ListaRepartidoresComponent,
+    children: [
+      { path: 'listaR', component: ListaRepartidoresComponent },
+    ]
+  },
+]  
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

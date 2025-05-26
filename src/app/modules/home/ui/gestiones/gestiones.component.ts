@@ -19,7 +19,7 @@ export class GestionesComponent {
       titulo: 'Carga',
       descripcion: 'Gestión de cargas',
       icono: 'fa-solid fa-truck',
-      ruta: '/carga',
+      ruta: '/cargas',
     },
     {
       titulo: 'Pagos',
@@ -45,6 +45,12 @@ export class GestionesComponent {
       icono: 'fa-solid fa-warehouse',
       ruta: '/stock',
     },
+    {
+      titulo: 'Repartidores',
+      descripcion: 'Gestión de repartidores',
+      icono: 'fa-solid fa-user-gear',
+      ruta: '/repartidores',
+    }
   ];
 
   constructor(private router: Router) { }
