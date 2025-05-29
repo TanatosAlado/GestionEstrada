@@ -1,6 +1,7 @@
 <h2 class="mb-4">Alta de Carga</h2>
 
 <form [formGroup]="cargaForm" (ngSubmit)="guardarCarga()" class="carga-form">
+
   <!-- Fecha -->
   <mat-form-field appearance="fill" class="full-width">
     <mat-label>Fecha de carga</mat-label>
@@ -19,12 +20,13 @@
     </mat-select>
   </mat-form-field>
 
-  <!-- Productos -->
+  <!-- Productos a cargar -->
   <h3 class="mt-4">Productos a cargar</h3>
   <div formArrayName="productos" class="productos-list">
-    <div *ngFor="let productoCtrl of productosFormArray.controls; let i = index" [formGroupName]="i" class="producto-item">
+    <div *ngFor="let productoCtrl of productosFormArray.controls; let i = index" [formGroupName]="i"
+      class="producto-item">
       <div class="producto-nombre">
-        {{ productosDisponibles[i].nombre }}
+        {{ getDescripcionProducto(productosDisponibles[i]) }}
       </div>
       <mat-form-field appearance="outline" class="cantidad-input">
         <input matInput type="number" formControlName="cantidad" min="0">
@@ -32,6 +34,5 @@
     </div>
   </div>
 
-  <!-- Botón -->
   <button mat-raised-button color="primary" type="submit" class="mt-4">Guardar Carga</button>
 </form>

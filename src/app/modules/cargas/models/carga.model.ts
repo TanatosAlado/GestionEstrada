@@ -8,7 +8,7 @@ export interface ProductoCarga {
 export interface Carga {
   id?: string;
   fecha: Date;
-  repartidor: string; // solo el ID del repartidor
+  repartidorId: string; // solo el ID del repartidor
   productos: ProductoCarga[];
   remitos: string[];
 }

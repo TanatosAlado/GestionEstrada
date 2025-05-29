@@ -15,8 +15,10 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StockModule } from './modules/stock/stock.module';
 import { ClientesModule } from './modules/clientes/clientes.module';
-import { CargasModule } from './modules/cargas/cargas.module';
 import { RepartidoresModule } from './modules/repartidores/repartidores.module';
+import { ProductosModule } from './modules/productos/productos.module';
+import { AbonosModule } from './modules/abonos/abonos.module';
+import { CargasModule } from './modules/cargas/cargas.module';
 
 @NgModule({
   declarations: [
@@ -36,8 +38,10 @@ import { RepartidoresModule } from './modules/repartidores/repartidores.module';
     BrowserAnimationsModule,
     StockModule,
     ClientesModule,
-    CargasModule,
-    RepartidoresModule
+    RepartidoresModule,
+    ProductosModule,
+    AbonosModule,
+    CargasModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ProduccionService } from '../../services/produccion.service';
-import { Timestamp } from '@angular/fire/firestore';
 import { MatDialogRef } from '@angular/material/dialog';
 import { StockService } from 'src/app/shared/services/stock.service';
-
+import { ProductoService } from 'src/app/modules/productos/services/productos.service';
+import { Producto } from 'src/app/modules/productos/models/producto.model';
 
 @Component({
   selector: 'app-alta-produccion',
@@ -13,13 +13,14 @@ import { StockService } from 'src/app/shared/services/stock.service';
 })
 export class AltaProduccionComponent implements OnInit {
   produccionForm: FormGroup;
-  tiposDisponibles = ['20L', '12L', '500cc'];
+  tiposDisponibles: Producto[] = [];
 
   constructor(
     private fb: FormBuilder,
     private produccionService: ProduccionService,
     private dialogRef: MatDialogRef<AltaProduccionComponent>,
     private stockService: StockService,
+    private productoService: ProductoService
   ) {
     this.produccionForm = this.fb.group({
       fecha: [new Date(), Validators.required],
@@ -29,7 +30,14 @@ export class AltaProduccionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.cargarTiposDisponibles();
     this.agregarTipo(); // uno por defecto
+  }
+
+  cargarTiposDisponibles(): void {
+    this.productoService.obtenerProductos().subscribe(productos => {
+      this.tiposDisponibles = productos.filter(p => p.tipo !== 'dispenser');
+    });
   }
 
   get detalle(): FormArray {
@@ -38,10 +46,11 @@ export class AltaProduccionComponent implements OnInit {
 
   agregarTipo(): void {
     this.detalle.push(this.fb.group({
-      tipoBidon: ['', Validators.required],
+      productoId: ['', Validators.required], // antes: tipoBidon
       cantidad: [0, [Validators.required, Validators.min(1)]]
     }));
   }
+
 
   eliminarTipo(index: number): void {
     this.detalle.removeAt(index);
@@ -52,12 +61,19 @@ export class AltaProduccionComponent implements OnInit {
 
     const formValue = this.produccionForm.value;
 
+    // Convertir detalle para que tenga productoId y cantidad
+    const detalleProduccion = formValue.detalle.map((item: any) => ({
+      id: item.productoId,
+      cantidad: item.cantidad
+    }));
+
     const produccion = {
       id: '', // se asigna luego
       fecha: formValue.fecha,
       operador: formValue.operador,
-      detalle: formValue.detalle
+      detalle: detalleProduccion
     };
+    console.log('Producción a guardar:', produccion);
 
     this.produccionService.crearProduccion(produccion)
       .then(async () => {
@@ -76,6 +92,4 @@ export class AltaProduccionComponent implements OnInit {
   cerrar(): void {
     this.dialogRef.close();
   }
-
-
 }

@@ -1,0 +1,41 @@
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+  <h2>Lista de Abonos</h2>
+  <button mat-raised-button color="primary" (click)="abrirAltaAbono()">+ Nuevo Abono</button>
+</div>
+
+<table mat-table [dataSource]="abonos" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="nombre">
+    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+    <td mat-cell *matCellDef="let abono"> {{ abono.nombre }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="bidones">
+    <th mat-header-cell *matHeaderCellDef> Bidones/semana </th>
+    <td mat-cell *matCellDef="let abono"> {{ abono.cantidadBidones }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="precio">
+    <th mat-header-cell *matHeaderCellDef> Precio </th>
+    <td mat-cell *matCellDef="let abono"> ${{ abono.precioMensual }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dispenser">
+    <th mat-header-cell *matHeaderCellDef> Incluye Dispenser </th>
+    <td mat-cell *matCellDef="let abono">
+      {{ abono.incluyeDispenser ? 'Sí' : 'No' }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="estado">
+    <th mat-header-cell *matHeaderCellDef> Estado </th>
+    <td mat-cell *matCellDef="let abono">
+      <button mat-button (click)="cambiarEstado(abono)">
+        {{ abono.activo ? 'Desactivar' : 'Activar' }}
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="['nombre', 'bidones', 'precio', 'dispenser', 'estado']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['nombre', 'bidones', 'precio', 'dispenser', 'estado'];"></tr>
+</table>

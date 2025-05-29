@@ -19,11 +19,14 @@ export class Cliente {
   pagos: any[] = [];
   stockAsociado: any[] = [];
 
+  abonos: { abonoId: string; fechaInicio: Date; }[] = []; // 👈 array para múltiples abonos
+  tieneDispenser?: boolean;
+
   constructor(params: Partial<Cliente> = {}) {
     Object.assign(this, params);
-
-    this.remitos =  [];
-    this.pagos =  [];
+    this.remitos = [];
+    this.pagos = [];
     this.stockAsociado = [];
+    this.abonos = params.abonos || []; // 👈 asegurarse que exista
   }
 }

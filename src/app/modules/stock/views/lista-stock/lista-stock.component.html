@@ -2,16 +2,59 @@
 
 <table mat-table [dataSource]="stock" class="mat-elevation-z8">
 
-  <ng-container matColumnDef="tipoBidon">
-    <th mat-header-cell *matHeaderCellDef> Tipo de Bidón </th>
-    <td mat-cell *matCellDef="let element"> {{ element.tipoBidon }} </td>
+  <!-- Tipo -->
+  <ng-container matColumnDef="tipo">
+    <th mat-header-cell *matHeaderCellDef> Tipo </th>
+    <td mat-cell *matCellDef="let element"> {{ element.tipo }} </td>
   </ng-container>
 
-  <ng-container matColumnDef="cantidad">
-    <th mat-header-cell *matHeaderCellDef> Cantidad </th>
-    <td mat-cell *matCellDef="let element"> {{ element.cantidad }} </td>
+  <!-- Capacidad -->
+  <ng-container matColumnDef="capacidad">
+    <th mat-header-cell *matHeaderCellDef> Capacidad </th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.tipo === 'bidon' ? element.capacidad + ' L' : '-' }}
+    </td>
   </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="['tipoBidon', 'cantidad']"></tr>
-  <tr mat-row *matRowDef="let row; columns: ['tipoBidon', 'cantidad'];"></tr>
+  <!-- Tipo Dispenser -->
+  <ng-container matColumnDef="tipoDispenser">
+    <th mat-header-cell *matHeaderCellDef> Tipo Dispenser </th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.tipo === 'dispenser' ? element.tipoDispenser : '-' }}
+    </td>
+  </ng-container>
+
+  <!-- Stock (editable) -->
+<ng-container matColumnDef="stock">
+  <th mat-header-cell *matHeaderCellDef> Stock </th>
+  <td mat-cell *matCellDef="let producto">
+    <input
+      type="number"
+      [(ngModel)]="producto.stock"
+      (ngModelChange)="onStockChange(producto)"
+      min="0"
+      style="width: 80px;"
+    />
+
+  </td>
+</ng-container>
+
+
+  <!-- Guardar cambios -->
+  <ng-container matColumnDef="acciones">
+    <th mat-header-cell *matHeaderCellDef> Guardar </th>
+    <td mat-cell *matCellDef="let producto">
+    <button
+      mat-icon-button
+      [color]="fueEditado(producto.id) ? 'accent' : 'primary'"
+      (click)="guardarStock(producto)"
+    >
+      <mat-icon>save</mat-icon>
+    </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="['tipo', 'capacidad', 'tipoDispenser', 'stock', 'acciones']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['tipo', 'capacidad', 'tipoDispenser', 'stock', 'acciones'];"></tr>
+
 </table>

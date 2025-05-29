@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>Registrar Producción</h2>
 
-<form [formGroup]="produccionForm" (ngSubmit)="guardar()" class="form-container" mat-dialog-content>
+<form [formGroup]="produccionForm" class="form-container" mat-dialog-content>
 
   <div class="form-row">
     <mat-form-field appearance="fill" class="full-width">
@@ -19,16 +19,16 @@
   <div formArrayName="detalle">
     <div *ngFor="let item of detalle.controls; let i = index" [formGroupName]="i" class="detalle-item">
 
-      <mat-form-field appearance="fill">
-        <mat-label>Tipo de bidón</mat-label>
-        <mat-select formControlName="tipoBidon">
-          <mat-option *ngFor="let tipo of tiposDisponibles" [value]="tipo">{{ tipo }}</mat-option>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Producto</mat-label>
+        <mat-select formControlName="productoId" required>
+          <mat-option *ngFor="let prod of tiposDisponibles" [value]="prod.id">{{ prod.tipo }} - {{prod.capacidad}}</mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Cantidad</mat-label>
-        <input type="number" matInput formControlName="cantidad">
+        <input type="number" matInput formControlName="cantidad" min="1">
       </mat-form-field>
 
       <button mat-icon-button color="warn" (click)="eliminarTipo(i)" *ngIf="detalle.length > 1">
@@ -37,11 +37,12 @@
     </div>
   </div>
 
-  <button mat-stroked-button color="primary" (click)="agregarTipo()" type="button">+ Agregar tipo</button>
+  <button mat-stroked-button color="primary" (click)="agregarTipo()" type="button">+ Agregar producto</button>
 
 </form>
 
 <mat-dialog-actions align="end" style="margin-top: 20px;">
   <button mat-button (click)="cerrar()">Cancelar</button>
-  <button mat-raised-button color="primary" [disabled]="produccionForm.invalid" (click)="guardar()">Guardar Producción</button>
+  <button mat-raised-button color="primary" [disabled]="produccionForm.invalid" (click)="guardar()" type="button">Guardar Producción</button>
+
 </mat-dialog-actions>

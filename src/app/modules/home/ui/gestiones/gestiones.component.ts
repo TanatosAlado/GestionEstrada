@@ -50,6 +50,18 @@ export class GestionesComponent {
       descripcion: 'Gestión de repartidores',
       icono: 'fa-solid fa-user-gear',
       ruta: '/repartidores',
+    },
+    {
+      titulo: 'Productos',
+      descripcion: 'Gestión de productos',
+      icono: 'fa-solid fa-cubes',
+      ruta: '/productos',
+    },
+    {
+      titulo: 'Abonos',
+      descripcion: 'Gestión de abonos',
+      icono: 'fa-solid fa-envelope-open-text',
+      ruta: '/abonos',
     }
   ];
 

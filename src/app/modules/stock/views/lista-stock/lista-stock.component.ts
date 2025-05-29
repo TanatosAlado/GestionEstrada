@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { StockService } from 'src/app/shared/services/stock.service';
+import { ProductoService } from 'src/app/modules/productos/services/productos.service';
+import { Producto } from 'src/app/modules/productos/models/producto.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-lista-stock',
@@ -8,14 +10,36 @@ import { StockService } from 'src/app/shared/services/stock.service';
 })
 export class ListaStockComponent {
 
-  stock: any[] = [];
+  stock: Producto[] = [];
+  productosEditados: Set<string> = new Set();
 
-  constructor(private stockService: StockService) { }
+  constructor(private productoService: ProductoService, private snackBar: MatSnackBar) { }
+
 
   ngOnInit() {
-    this.stockService.getStockActual().subscribe(data => {
-      this.stock = data;
+    this.productoService.obtenerProductos().subscribe(productos => {
+      this.stock = productos.map(p => ({ ...p, stock: p.stock ?? 0 }));
     });
+  }
+
+  onStockChange(producto: Producto) {
+    this.productosEditados.add(producto.id);
+  }
+
+  guardarStock(producto: Producto) {
+    this.productoService.actualizarProducto(producto)
+      .then(() => {
+        this.productosEditados.delete(producto.id);
+        this.snackBar.open('Stock actualizado', 'Cerrar', { duration: 2000 });
+      })
+      .catch(error => {
+        console.error('Error al actualizar stock', error);
+        this.snackBar.open('Error al guardar stock', 'Cerrar', { duration: 3000 });
+      });
+  }
+
+  fueEditado(id: string): boolean {
+    return this.productosEditados.has(id);
   }
 
 }

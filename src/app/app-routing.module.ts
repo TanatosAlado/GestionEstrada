@@ -12,6 +12,8 @@ import { ListaClienteComponent } from './modules/clientes/views/lista-cliente/li
 import { AltaClienteComponent } from './modules/clientes/views/alta-cliente/alta-cliente.component';
 import { ListaCargaComponent } from './modules/cargas/views/lista-carga/lista-carga.component';
 import { ListaRepartidoresComponent } from './modules/repartidores/views/lista-repartidores/lista-repartidores.component';
+import { ListaProductosComponent } from './modules/productos/views/lista-productos/lista-productos.component';
+import { ListaAbonoComponent } from './modules/abonos/views/lista-abono/lista-abono.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' }, // cambio de prefix a full
@@ -58,6 +60,20 @@ const routes: Routes = [
     component: ListaRepartidoresComponent,
     children: [
       { path: 'listaR', component: ListaRepartidoresComponent },
+    ]
+  },
+    {
+    path: 'productos',
+    component: ListaProductosComponent,
+    children: [
+      { path: 'listaP', component: ListaProductosComponent },
+    ]
+  },
+    {
+    path: 'abonos',
+    component: ListaAbonoComponent,
+    children: [
+      { path: 'listaP', component: ListaAbonoComponent },
     ]
   },
 ]  

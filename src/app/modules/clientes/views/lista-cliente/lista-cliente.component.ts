@@ -3,6 +3,7 @@ import { ClienteService } from '../../services/cliente.service';
 import { Cliente } from '../../models/cliente.model';
 import { MatDialog } from '@angular/material/dialog';
 import { AltaClienteComponent } from '../alta-cliente/alta-cliente.component';
+import { AsignarAbonoComponent } from '../asignar-abono/asignar-abono.component';
 
 @Component({
   selector: 'app-lista-cliente',
@@ -54,4 +55,18 @@ export class ListaClienteComponent {
       // Aquí pondrías la lógica para eliminar
     }
   }
+
+  abrirAsignarAbono(cliente: Cliente) {
+  const dialogRef = this.dialog.open(AsignarAbonoComponent, {
+    width: '500px',
+    data: { cliente }
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      this.cargarClientes(); // refrescar listado si se asignó un abono
+    }
+  });
+}
+
 }
