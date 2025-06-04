@@ -1,0 +1,27 @@
+.progress-bar-container {
+  background-color: #e0e0e0;
+  width: 100%;
+  height: 10px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #4caf50;
+  transition: width 0.4s ease;
+}
+
+.estado-texto {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.estado-texto.completada {
+  color: green;
+}
+
+.estado-texto.pendiente {
+  color: red;
+}

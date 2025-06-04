@@ -1,0 +1,71 @@
+.seccion-titulo,
+.seccion-subtitulo {
+  margin-bottom: 10px;
+}
+
+.seccion-titulo {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.seccion-subtitulo {
+  font-size: 1.3rem;
+  margin-top: 30px;
+}
+
+.productos-lista {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #fafafa;
+}
+
+.productos-lista li {
+  padding: 8px 12px;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+}
+
+.productos-lista li:last-child {
+  border-bottom: none;
+}
+
+.cliente-select {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 20px;
+}
+
+.form-remito {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.productos-inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 16px;
+  background-color: #f9f9f9;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.producto-item mat-form-field {
+  width: 100%;
+}
+
+.botones {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}

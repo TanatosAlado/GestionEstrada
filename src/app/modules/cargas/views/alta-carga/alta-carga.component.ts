@@ -46,6 +46,7 @@ export class AltaCargaComponent implements OnInit {
       this.productosDisponibles.forEach(p => {
         this.productosFormArray.push(this.fb.group({
           id: [p.id],
+          descripcion: [this.getDescripcionProducto(p)],
           cantidad: [0, [Validators.required, Validators.min(0)]]
         }));
       });
@@ -60,34 +61,44 @@ export class AltaCargaComponent implements OnInit {
     return this.cargaForm.get('productos') as FormArray;
   }
 
-  async guardarCarga() {
+async guardarCarga() {
+  if (this.cargaForm.invalid) return;
 
-    if (this.cargaForm.invalid) return;
+  const formValue = this.cargaForm.value;
 
-    const carga = this.cargaForm.value;
-    console.log('Datos de carga a guardar:', carga);
+  const productosFiltrados = formValue.productos
+    .filter((p: any) => p.cantidad > 0)
+    .map((p: any) => ({
+      ...p,
+      cantidadAsignada: 0
+    }));
 
-    try {
-      await this.cargaService.guardarCarga(carga); // ✅ ya tenés este método funcionando
+  const carga = {
+    ...formValue,
+    productos: productosFiltrados
+  };
 
-      const productosParaDescontar = carga.productos.map((p: any) => ({
-        id: p.id,
-        cantidad: p.cantidad
-      }));
+  console.log('Datos de carga a guardar:', carga);
 
-      await this.cargaService.descontarStock(productosParaDescontar); // ✅ nuevo paso
+  try {
+    await this.cargaService.guardarCarga(carga);
 
-      // Opcional: mostrar mensaje de éxito
-      this.dialogRef.close(true);  // true indica que la carga fue exitosa
+    const productosParaDescontar = carga.productos.map((p: any) => ({
+      id: p.id,
+      cantidad: p.cantidad
+    }));
 
+    await this.cargaService.descontarStock(productosParaDescontar);
 
-      this.cargaForm.reset();
-      // Otros pasos que tengas, como recargar listas
-    } catch (error) {
-      console.error('Error al guardar la carga o descontar stock:', error);
-      this.snackbar.open('Ocurrió un error al guardar la carga', 'Cerrar', { duration: 3000 });
-    }
+    this.dialogRef.close(true);
+    this.cargaForm.reset();
+
+  } catch (error) {
+    console.error('Error al guardar la carga o descontar stock:', error);
+    this.snackbar.open('Ocurrió un error al guardar la carga', 'Cerrar', { duration: 3000 });
   }
+}
+
 
   getDescripcionProducto(producto: Producto | undefined): string {
     if (!producto) {

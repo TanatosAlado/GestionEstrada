@@ -1,0 +1,63 @@
+<h2>Resumen de la carga</h2>
+
+<ul class="productos-lista">
+  <li *ngFor="let producto of productosCarga">
+    <strong>{{ producto.descripcion }}</strong> -
+    Total: {{ producto.cantidadOriginal }} |
+    Disponible: {{ producto.cantidadOriginal - producto.cantidadAsignada }}
+  </li>
+</ul>
+
+
+<h3>Generar remito para un cliente</h3>
+
+<form [formGroup]="formRemito" (ngSubmit)="onGuardar()">
+  <mat-form-field class="cliente-select" appearance="fill">
+    <mat-label>Cliente</mat-label>
+    <input
+      type="text"
+      placeholder="Buscar cliente"
+      aria-label="Cliente"
+      matInput
+      [matAutocomplete]="auto"
+      formControlName="clienteId"
+    />
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarNombreCliente.bind(this)">
+      <mat-option *ngFor="let cliente of clientesFiltrados" [value]="cliente.id">
+        {{ cliente.nombre }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="formRemito.get('clienteId')?.hasError('required')">
+      Debe seleccionar un cliente
+    </mat-error>
+  </mat-form-field>
+
+  <div class="productos-inputs">
+    <div class="producto-item" *ngFor="let producto of productosCarga">
+      <label>
+        {{ producto.descripcion }} 
+      </label>
+      <input
+        type="number"
+        [formControlName]="controlName(producto.id)"
+        min="0"
+        [max]="producto.cantidadOriginal"
+      />
+      <mat-error
+        *ngIf="
+          formRemito.get(controlName(producto.id))?.hasError('min') ||
+          formRemito.get(controlName(producto.id))?.hasError('max')
+        "
+      >
+        Cantidad inválida
+      </mat-error>
+    </div>
+  </div>
+
+  <div class="botones">
+    <button mat-button type="button" (click)="onCancelar()">Cancelar</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!puedeGuardar">
+      Generar remito
+    </button>
+  </div>
+</form>

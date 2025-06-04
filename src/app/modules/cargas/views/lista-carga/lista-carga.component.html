@@ -21,6 +21,22 @@
       <td mat-cell *matCellDef="let carga">{{ carga.repartidorNombre }}</td>
     </ng-container>
 
+    <ng-container matColumnDef="avance">
+      <th mat-header-cell *matHeaderCellDef>Avance</th>
+      <td mat-cell *matCellDef="let carga">
+        <div class="progress-bar-container">
+          <div class="progress-bar" [style.width.%]="calcularPorcentajeAsignado(carga)">
+          </div>
+        </div>
+        <div class="estado-texto" [ngClass]="{
+      'completada': cargaCompletada(carga),
+      'pendiente': !cargaCompletada(carga)
+    }">
+          {{ cargaCompletada(carga) ? 'Asignada al 100%' : 'Pendiente' }}
+        </div>
+      </td>
+    </ng-container>
+
     <!-- Acciones -->
     <ng-container matColumnDef="acciones">
       <th mat-header-cell *matHeaderCellDef>Acciones</th>
@@ -28,6 +44,8 @@
         <button mat-icon-button color="accent">
           <mat-icon>visibility</mat-icon>
         </button>
+        <button mat-button (click)="abrirGenerarRemitos(carga)">Generar remitos</button>
+
       </td>
     </ng-container>
 
