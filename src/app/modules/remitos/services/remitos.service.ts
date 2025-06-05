@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { addDoc, collection, doc, Firestore, getDoc, updateDoc } from '@angular/fire/firestore';
+import { addDoc, collection, doc, Firestore, getDoc, getDocs, updateDoc } from '@angular/fire/firestore';
 import { RemitoCliente } from '../models/remitoCliente.model';
 import { CargaService } from '../../cargas/services/carga.service';
+import { from, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,14 +19,12 @@ async generarRemitoCliente(remito: {
 
   const remitosRef = collection(this.firestore, 'RemitosClientes');
   const clienteRef = doc(this.firestore, `Clientes/${remito.clienteId}`);
-
   const clienteSnap = await getDoc(clienteRef);
   const clienteData = clienteSnap.data();
 
   const stockActual = clienteData?.['stock'] || {};
   const remitosActuales = clienteData?.['remitos'] || [];
 
-  // 👇 Obtener nombre visible del cliente
   let clienteNombre = '';
   if (clienteData?.['tipoCliente'] === 'empresa') {
     clienteNombre = clienteData['razonSocial'] || 'Empresa sin nombre';
@@ -33,18 +32,21 @@ async generarRemitoCliente(remito: {
     clienteNombre = `${clienteData['nombre'] || ''} ${clienteData['apellido'] || ''}`.trim();
   }
 
-  // 👇 Crear el objeto completo de remito
+  // 👇 Primero creamos el documento vacío para obtener el ID
+  const remitoDocRef = await addDoc(remitosRef, {});
+  const remitoId = remitoDocRef.id;
+
+  // 👇 Ahora sí, escribimos el remito completo con su propio ID
   const remitoConEstado = {
     ...remito,
     facturado: false,
-    clienteNombre // ✅ Nombre completo o razón social
+    clienteNombre,
+    id: remitoId
   };
 
-  // 👇 Guardar el nuevo remito
-  const remitoDocRef = await addDoc(remitosRef, remitoConEstado);
-  const remitoId = remitoDocRef.id;
+  await updateDoc(remitoDocRef, remitoConEstado); // ✅ Guardamos el objeto completo
 
-  // 👇 Actualizar stock y remitos en el cliente
+  // 👇 Actualizar stock y remitos del cliente
   const nuevoStock = { ...stockActual };
   for (const producto of remito.productos) {
     if (!nuevoStock[producto.codigo]) nuevoStock[producto.codigo] = 0;
@@ -65,12 +67,12 @@ async generarRemitoCliente(remito: {
     remitos: remitosActualizados
   });
 
-  // 👉 ACTUALIZAR CARGA: cantidadAsignada
   await this.cargaService.actualizarCantidadAsignadaEnCarga(
     cargaId,
     remito.productos.map(p => ({ id: p.codigo, cantidad: p.cantidad }))
   );
 }
+
 
   
 
@@ -100,7 +102,22 @@ async guardarRemitos(remitos: RemitoCliente[]): Promise<void> {
 }
 
 
+obtenerTodosLosRemitos(): Observable<RemitoCliente[]> {
+  const ref = collection(this.firestore, 'RemitosClientes');
+  return from(getDocs(ref)).pipe(
+    map(snapshot =>
+      snapshot.docs.map(doc => {
+        const data = doc.data() as RemitoCliente;
+        return { id: doc.id, ...data };
+      })
+    )
+  );
+}
 
+marcarRemitoComoFacturado(remitoId: string): Promise<void> {
+  const remitoDocRef = doc(this.firestore, `RemitosClientes/${remitoId}`);
+  return updateDoc(remitoDocRef, { facturado: true });
+}
 
 
 

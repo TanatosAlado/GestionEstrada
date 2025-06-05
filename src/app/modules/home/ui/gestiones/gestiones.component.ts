@@ -62,6 +62,12 @@ export class GestionesComponent {
       descripcion: 'Gestión de abonos',
       icono: 'fa-solid fa-envelope-open-text',
       ruta: '/abonos',
+    },
+    {
+      titulo: 'Facturas',
+      descripcion: 'Gestión de facturas',
+      icono: 'fa-solid fa-file-lines',
+      ruta: '/facturas',
     }
   ];
 
