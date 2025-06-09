@@ -1,0 +1,34 @@
+<h2>Detalle del Remito</h2>
+
+<div class="info-remito">
+  <p><strong>Cliente:</strong> {{ remito.clienteNombre || remito.cliente?.nombre }}</p>
+  <p><strong>Fecha:</strong> {{ remito.fecha.toDate() | date:'dd/MM/yyyy HH:mm' }}</p>
+
+</div>
+
+<h3>Productos</h3>
+
+<table mat-table [dataSource]="remito.productos" class="tabla-productos" *ngIf="remito.productos?.length > 0">
+  <!-- Descripción -->
+  <ng-container matColumnDef="descripcion">
+    <th mat-header-cell *matHeaderCellDef>Descripción</th>
+    <td mat-cell *matCellDef="let p">{{ p.descripcion }}</td>
+  </ng-container>
+
+  <!-- Cantidad -->
+  <ng-container matColumnDef="cantidad">
+    <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+    <td mat-cell *matCellDef="let p">{{ p.cantidad }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="['descripcion', 'cantidad']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['descripcion', 'cantidad'];"></tr>
+</table>
+
+<div *ngIf="!remito.productos?.length">
+  <p>No hay productos en este remito.</p>
+</div>
+
+<div class="botones">
+  <button mat-button (click)="cerrar()">Cerrar</button>
+</div>

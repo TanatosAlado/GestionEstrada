@@ -113,6 +113,7 @@ export class GenerarRemitosComponent implements OnInit {
     const productos = this.productosCarga
       .map(p => ({
         codigo: p.id,
+        descripcion: p.descripcion,
         cantidad: this.formRemito.get(this.controlName(p.id))?.value || 0
       }))
       .filter(p => p.cantidad > 0);

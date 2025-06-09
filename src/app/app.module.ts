@@ -20,6 +20,7 @@ import { ProductosModule } from './modules/productos/productos.module';
 import { AbonosModule } from './modules/abonos/abonos.module';
 import { CargasModule } from './modules/cargas/cargas.module';
 import { RemitosModule } from './modules/remitos/remitos.module';
+import { FacturacionModule } from './modules/facturacion/facturacion.module';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { RemitosModule } from './modules/remitos/remitos.module';
     ProductosModule,
     AbonosModule,
     CargasModule,
-    RemitosModule
+    RemitosModule,
+    FacturacionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

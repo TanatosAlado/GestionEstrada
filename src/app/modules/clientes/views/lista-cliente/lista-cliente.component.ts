@@ -3,7 +3,8 @@ import { ClienteService } from '../../services/cliente.service';
 import { Cliente } from '../../models/cliente.model';
 import { MatDialog } from '@angular/material/dialog';
 import { AltaClienteComponent } from '../alta-cliente/alta-cliente.component';
-import { AsignarAbonoComponent } from '../asignar-abono/asignar-abono.component';
+import { AltaAbonoComponent } from 'src/app/modules/abonos/views/alta-abono/alta-abono.component';
+import { VerAbonosComponent } from 'src/app/modules/abonos/views/ver-abonos/ver-abonos.component';
 
 @Component({
   selector: 'app-lista-cliente',
@@ -57,8 +58,8 @@ export class ListaClienteComponent {
   }
 
   abrirAsignarAbono(cliente: Cliente) {
-  const dialogRef = this.dialog.open(AsignarAbonoComponent, {
-    width: '500px',
+  const dialogRef = this.dialog.open(AltaAbonoComponent, {
+    width: '900px',
     data: { cliente }
   });
 
@@ -66,6 +67,13 @@ export class ListaClienteComponent {
     if (result) {
       this.cargarClientes(); // refrescar listado si se asignó un abono
     }
+  });
+}
+
+verAbonos(cliente: Cliente) {
+  this.dialog.open(VerAbonosComponent, {
+    width: '900px',
+    data: { clienteId: cliente.id }
   });
 }
 

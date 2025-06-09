@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FacturasService } from '../../services/facturas.service';
 
 @Component({
   selector: 'app-facturas-lista',
@@ -6,5 +7,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./facturas-lista.component.css']
 })
 export class FacturasListaComponent {
+
+  facturas: any[] = [];
+
+  constructor(private facturasService: FacturasService) { }
+
+  ngOnInit(): void {
+    this.facturasService.obtenerFacturas().subscribe(data => {
+      this.facturas = data;
+      console.log('Facturas obtenidas:', this.facturas);
+    });
+  }
 
 }

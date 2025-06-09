@@ -19,7 +19,7 @@ export class Cliente {
   pagos: any[] = [];
   stockAsociado: any[] = [];
 
-  abonos: { abonoId: string; fechaInicio: Date; }[] = []; // 👈 array para múltiples abonos
+  abonos: { abonoId: string; fechaInicio: Date; cantidadContratada: number}[] = []; // 👈 array para múltiples abonos
   tieneDispenser?: boolean;
 
   constructor(params: Partial<Cliente> = {}) {

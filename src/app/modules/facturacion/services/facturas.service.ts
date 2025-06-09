@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Firestore, collection, addDoc, updateDoc, doc, getFirestore } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, updateDoc, doc, getFirestore, collectionData } from '@angular/fire/firestore';
 
 
 @Injectable({
@@ -24,6 +24,9 @@ export class FacturasService {
     });
   }
 
-
+  obtenerFacturas(): Observable<any[]> {
+    const facturasRef = collection(this.firestore, 'Facturas');
+    return collectionData(facturasRef, { idField: 'id' }) as Observable<any[]>;
+  }
   
 }

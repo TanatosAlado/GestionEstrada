@@ -25,6 +25,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 
@@ -33,12 +35,12 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 @NgModule({
   declarations: [NavbarComponent, FooterComponent],
   imports: [
-    CommonModule, MatDialogModule, RouterModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSlideToggleModule, MatDividerModule, MatSnackBarModule, MatTooltipModule, MatBadgeModule, MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatOptionModule, MatButtonToggleModule
+    CommonModule, MatDialogModule, RouterModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSlideToggleModule, MatDividerModule, MatSnackBarModule, MatTooltipModule, MatBadgeModule, MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatOptionModule, MatButtonToggleModule, MatProgressSpinnerModule, MatChipsModule
   ],
   exports: [
     NavbarComponent,
     FooterComponent,
-    MatDialogModule, RouterModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSlideToggleModule, MatDividerModule, MatSnackBarModule, MatTooltipModule, MatBadgeModule, MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatOptionModule, MatButtonToggleModule
+    MatDialogModule, RouterModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSlideToggleModule, MatDividerModule, MatSnackBarModule, MatTooltipModule, MatBadgeModule, MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatOptionModule, MatButtonToggleModule, MatProgressSpinnerModule, MatChipsModule
   ]
 })
 export class SharedModule { }

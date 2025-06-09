@@ -1,27 +1,69 @@
-<h2>Nuevo Abono</h2>
+<h2 mat-dialog-title>Nuevo Abono</h2>
 
-<form [formGroup]="abonoForm" (ngSubmit)="guardarAbono()">
-  <mat-form-field appearance="fill" class="w-100">
-    <mat-label>Nombre del abono</mat-label>
-    <input matInput formControlName="nombre">
+<mat-dialog-content [formGroup]="form">
+
+  <!-- Cliente -->
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Cliente</mat-label>
+    <mat-select formControlName="clienteId">
+      <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">
+        {{ cliente.tipoCliente === 'personal' ? cliente.nombre + ' ' + cliente.apellido : cliente.razonSocial }}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
 
-  <mat-form-field appearance="fill" class="w-100">
-    <mat-label>Cantidad de bidones por semana</mat-label>
-    <input matInput type="number" formControlName="cantidadBidones" min="1">
+
+  <!-- Tipo -->
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Tipo de cliente</mat-label>
+    <mat-select formControlName="tipo">
+      <mat-option value="particular">Particular</mat-option>
+      <mat-option value="empresa">Empresa</mat-option>
+    </mat-select>
   </mat-form-field>
 
-  <mat-form-field appearance="fill" class="w-100">
-    <mat-label>Precio mensual</mat-label>
-    <input matInput type="number" formControlName="precioMensual" min="0">
+  <!-- Cantidad bidones -->
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Bidones por semana</mat-label>
+    <input type="number" matInput formControlName="cantidadBidones" />
   </mat-form-field>
 
-  <mat-checkbox formControlName="incluyeDispenser">
-    ¿Incluye dispenser?
-  </mat-checkbox>
+  <!-- Precio -->
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Precio negociado</mat-label>
+    <input type="number" matInput formControlName="precioNegociado" />
+  </mat-form-field>
 
-  <br><br>
-  <button mat-raised-button color="primary" type="submit" [disabled]="abonoForm.invalid">
-    Guardar Abono
+  <!-- Cantidad de abonos -->
+  <mat-form-field appearance="outline">
+    <mat-label>Cantidad contratada</mat-label>
+    <input matInput type="number" formControlName="cantidadContratada">
+  </mat-form-field>
+
+  <!-- Fecha de inicio -->
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Fecha de inicio</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="fechaInicio" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <!-- Fecha fijación precio -->
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Precio fijo hasta</mat-label>
+    <input matInput [matDatepicker]="fijacionPicker" formControlName="fechaFijacionPrecioHasta" />
+    <mat-datepicker-toggle matSuffix [for]="fijacionPicker"></mat-datepicker-toggle>
+    <mat-datepicker #fijacionPicker></mat-datepicker>
+  </mat-form-field>
+
+  <!-- Activo -->
+  <mat-checkbox formControlName="activo">Activo</mat-checkbox>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="guardar()" [disabled]="form.invalid">
+    Guardar
   </button>
-</form>
+</mat-dialog-actions>

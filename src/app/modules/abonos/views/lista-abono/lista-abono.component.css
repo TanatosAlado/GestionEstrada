@@ -1,0 +1,15 @@
+.contenedor-lista {
+  padding: 2rem;
+  max-width: 900px;
+  margin: auto;
+}
+
+.acciones {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+table {
+  width: 100%;
+}

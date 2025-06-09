@@ -13,7 +13,7 @@ import { AltaClienteComponent } from './modules/clientes/views/alta-cliente/alta
 import { ListaCargaComponent } from './modules/cargas/views/lista-carga/lista-carga.component';
 import { ListaRepartidoresComponent } from './modules/repartidores/views/lista-repartidores/lista-repartidores.component';
 import { ListaProductosComponent } from './modules/productos/views/lista-productos/lista-productos.component';
-import { ListaAbonoComponent } from './modules/abonos/views/lista-abono/lista-abono.component';
+import { ListaAbonosComponent } from './modules/abonos/views/lista-abono/lista-abono.component';
 import { RemitosListaComponent } from './modules/remitos/views/remitos-lista/remitos-lista.component';
 import { FacturasListaComponent } from './modules/facturacion/views/facturas-lista/facturas-lista.component';
 
@@ -73,9 +73,9 @@ const routes: Routes = [
   },
     {
     path: 'abonos',
-    component: ListaAbonoComponent,
+    component: ListaAbonosComponent,
     children: [
-      { path: 'listaP', component: ListaAbonoComponent },
+      { path: 'listaP', component: ListaAbonosComponent },
     ]
   },
     {

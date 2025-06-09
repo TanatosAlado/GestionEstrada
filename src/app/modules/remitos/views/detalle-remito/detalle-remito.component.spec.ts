@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AsignarAbonoComponent } from './asignar-abono.component';
+import { DetalleRemitoComponent } from './detalle-remito.component';
 
-describe('AsignarAbonoComponent', () => {
-  let component: AsignarAbonoComponent;
-  let fixture: ComponentFixture<AsignarAbonoComponent>;
+describe('DetalleRemitoComponent', () => {
+  let component: DetalleRemitoComponent;
+  let fixture: ComponentFixture<DetalleRemitoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AsignarAbonoComponent ]
+      declarations: [ DetalleRemitoComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AsignarAbonoComponent);
+    fixture = TestBed.createComponent(DetalleRemitoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -40,9 +40,11 @@
         <button mat-icon-button color="warn" (click)="eliminarCliente(cliente)">
           <mat-icon>delete</mat-icon>
         </button>
-        <!-- NUEVO: Asignar Abono -->
         <button mat-icon-button color="accent" (click)="abrirAsignarAbono(cliente)">
           <mat-icon>assignment</mat-icon>
+        </button>
+        <button mat-icon-button color="accent" (click)="verAbonos(cliente)">
+          <mat-icon>visibility</mat-icon>
         </button>
       </td>
     </ng-container>

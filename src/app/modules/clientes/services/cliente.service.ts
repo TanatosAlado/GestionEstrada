@@ -23,7 +23,6 @@ export class ClienteService {
   }
 
   agregarCliente(cliente: Cliente): Promise<void> {
-    console.log('agregarCliente', cliente);
     const colRef = col(this.firestore, 'Clientes');
     const newDocRef = firestoreDoc(colRef);
     cliente.id = newDocRef.id;
@@ -35,5 +34,8 @@ export class ClienteService {
     return updateDoc(clienteDocRef, { ...cliente });
   }
 
+  getRefClientePorId(id: string) {
+    return doc(this.firestore, 'Clientes', id);
+  }
 
 }

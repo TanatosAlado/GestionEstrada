@@ -1,1 +1,28 @@
-<p>facturas-lista works!</p>
+<h2>Listado de Facturas</h2>
+
+<table mat-table [dataSource]="facturas" class="mat-elevation-z8">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+    <td mat-cell *matCellDef="let factura"> {{ factura.id }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="cliente">
+    <th mat-header-cell *matHeaderCellDef> Cliente </th>
+    <td mat-cell *matCellDef="let factura"> {{ factura.clienteNombre || 'N/A' }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="monto">
+    <th mat-header-cell *matHeaderCellDef> Monto </th>
+    <td mat-cell *matCellDef="let factura"> ${{ factura.total | number:'1.2-2' }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="fecha">
+    <th mat-header-cell *matHeaderCellDef> Fecha </th>
+    <td mat-cell *matCellDef="let factura">
+      {{ factura.fecha?.toDate() | date:'dd/MM/yyyy HH:mm' }}
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="['id', 'cliente', 'monto', 'fecha']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['id', 'cliente', 'monto', 'fecha']"></tr>
+</table>

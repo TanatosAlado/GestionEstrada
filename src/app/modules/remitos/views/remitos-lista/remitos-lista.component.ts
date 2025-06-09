@@ -7,6 +7,8 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatTableDataSource } from '@angular/material/table';
 import { FacturasService } from 'src/app/modules/facturacion/services/facturas.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DetalleRemitoComponent } from '../detalle-remito/detalle-remito.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-remitos-lista',
@@ -21,7 +23,7 @@ export class RemitosListaComponent implements OnInit {
   clienteSeleccionado: string | null = null;
   estadoFacturacionSeleccionado: boolean | null = null;
 
-  displayedColumns: string[] = ['select', 'cliente', 'fecha', 'repartidor', 'facturado'];
+  displayedColumns: string[] = ['select', 'cliente', 'fecha', 'repartidor', 'facturado','acciones'];
   remitosSeleccionados: RemitoCliente[] = [];
   dataSource = new MatTableDataSource<RemitoCliente>();
 
@@ -29,7 +31,8 @@ export class RemitosListaComponent implements OnInit {
     private remitosService: RemitosService,
     private clienteService: ClienteService,
     private facturasService: FacturasService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -167,7 +170,12 @@ export class RemitosListaComponent implements OnInit {
     });
   }
 
-
+verDetalle(remito: any): void {
+  this.dialog.open(DetalleRemitoComponent, {
+    width: '600px',
+    data: { remito }
+  });
+}
 
 
 }

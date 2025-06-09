@@ -1,49 +1,64 @@
-import { Component } from '@angular/core';
-import { Abono } from '../../models/abono.model';
-import { AbonosService } from '../../services/abonos.service';
-import { AltaAbonoComponent } from '../alta-abono/alta-abono.component';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { AltaAbonoComponent } from '../alta-abono/alta-abono.component';
+import { AbonoCliente } from '../../models/abonoCliente.model';
+import { AbonosService } from '../../services/abonos.service';
+import { Timestamp } from 'firebase/firestore';
 
 @Component({
   selector: 'app-lista-abono',
   templateUrl: './lista-abono.component.html',
   styleUrls: ['./lista-abono.component.css']
 })
-export class ListaAbonoComponent {
+export class ListaAbonosComponent implements OnInit {
 
-  abonos: Abono[] = [];
-columnas: string[] = ['nombre', 'cantidadBidones', 'precioMensual', 'acciones'];
+  abonos: AbonoCliente[] = [];
 
-constructor(private abonoService: AbonosService, private dialog: MatDialog) {}
+  columnas: string[] = [
+    'clienteNombre',
+    'tipo',
+    'cantidadBidones',
+    'precioNegociado',
+    'fechaInicio',
+    'fechaFijacionPrecioHasta',
+    'activo'
+  ];
 
-ngOnInit() {
-  this.abonoService.obtenerAbonos().subscribe(abonos => {
-    this.abonos = abonos;
-  });
-}
+  constructor(private dialog: MatDialog, private abonoService: AbonosService) { }
 
-asignarAbono(abono: Abono) {
-  // abrir formulario para asignar este abono a un cliente
-}
-
-  cambiarEstado(abono: Abono) {
-    const actualizado = { ...abono, activo: !abono.activo };
-    this.abonoService.actualizarAbono(actualizado.id!, actualizado);
+  ngOnInit(): void {
+    // Luego se cargará desde Firebase
+    this.cargarAbonos();
   }
 
   abrirAltaAbono() {
-  const dialogRef = this.dialog.open(AltaAbonoComponent, {
-    width: '500px'
-  });
+    const dialogRef = this.dialog.open(AltaAbonoComponent, {
+      width: '500px',
+    });
 
-  dialogRef.afterClosed().subscribe(result => {
-    if (result) {
-      // Podés refrescar el listado si lo necesitás
-      this.abonoService.obtenerAbonos().subscribe(abonos => {
-        this.abonos = abonos;
-      });
-    }
-  });
-}
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Refrescar lista si se creó un nuevo abono
+        this.cargarAbonos();
+      }
+    });
+  }
 
+  cargarAbonos() {
+    this.abonoService.obtenerAbonos().subscribe((abonos: AbonoCliente[]) => {
+      this.abonos = abonos.map((a) => ({
+        ...a,
+        fechaInicio:
+          a.fechaInicio instanceof Date
+            ? a.fechaInicio
+            : (a.fechaInicio as Timestamp).toDate(),
+        fechaFijacionPrecioHasta:
+          a.fechaFijacionPrecioHasta
+            ? a.fechaFijacionPrecioHasta instanceof Date
+              ? a.fechaFijacionPrecioHasta
+              : (a.fechaFijacionPrecioHasta as Timestamp).toDate()
+            : undefined
+      }));
+    });
+  }
 }
