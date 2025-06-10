@@ -20,19 +20,40 @@ export class EditarAbonoComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public abono: AbonoCliente
   ) {}
 
-  ngOnInit(): void {
-    const fechaFijacion = this.abono.fechaFijacionPrecioHasta instanceof Timestamp
+ngOnInit(): void {
+  let fechaFijacion: Date | null = null;
+
+  if (this.abono.fechaFijacionPrecioHasta) {
+    fechaFijacion = this.abono.fechaFijacionPrecioHasta instanceof Timestamp
       ? this.abono.fechaFijacionPrecioHasta.toDate()
       : new Date(this.abono.fechaFijacionPrecioHasta);
-
-    this.puedeEditarPrecio = fechaFijacion <= this.hoy;
-
-    this.abonoForm = this.fb.group({
-      cantidadContratada: [this.abono.cantidadContratada, [Validators.required, Validators.min(1)]],
-      precioNegociado: [{ value: this.abono.precioNegociado, disabled: !this.puedeEditarPrecio }, [Validators.required, Validators.min(0)]],
-      fechaFijacionPrecioHasta: [fechaFijacion, Validators.required]
-    });
   }
+
+  // Solo se bloquea la edición del precio si hay una fecha límite futura
+  this.puedeEditarPrecio = !fechaFijacion || fechaFijacion <= this.hoy;
+
+  this.abonoForm = this.fb.group({
+    cantidadContratada: [this.abono.cantidadContratada, [Validators.required, Validators.min(1)]],
+    precioNegociado: [
+      { value: this.abono.precioNegociado, disabled: !this.puedeEditarPrecio },
+      [Validators.required, Validators.min(0)]
+    ],
+    fechaFijacionPrecioHasta: [fechaFijacion, this.fechaMinimaValidator()]
+  });
+}
+
+fechaMinimaValidator() {
+  return (control) => {
+    const fecha = control.value;
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+
+    if (fecha && new Date(fecha) < hoy) {
+      return { fechaPasada: true };
+    }
+    return null;
+  };
+}
 
   guardar(): void {
     if (this.abonoForm.valid) {

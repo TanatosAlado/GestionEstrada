@@ -59,7 +59,7 @@ export class ListaClienteComponent {
 
   abrirAsignarAbono(cliente: Cliente) {
   const dialogRef = this.dialog.open(AltaAbonoComponent, {
-    width: '900px',
+    width: '500px',
     data: { cliente }
   });
 

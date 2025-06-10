@@ -3,7 +3,7 @@
 <mat-dialog-content [formGroup]="form">
 
   <!-- Cliente -->
-  <mat-form-field appearance="outline" class="w-full">
+  <mat-form-field appearance="outline" floatLabel="always" class="w-100">
     <mat-label>Cliente</mat-label>
     <mat-select formControlName="clienteId">
       <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">
@@ -14,7 +14,7 @@
 
 
   <!-- Tipo -->
-  <mat-form-field appearance="outline" class="w-full">
+  <mat-form-field appearance="outline" class="w-100">
     <mat-label>Tipo de cliente</mat-label>
     <mat-select formControlName="tipo">
       <mat-option value="particular">Particular</mat-option>
@@ -23,25 +23,25 @@
   </mat-form-field>
 
   <!-- Cantidad bidones -->
-  <mat-form-field appearance="outline" class="w-full">
+  <mat-form-field appearance="outline" class="w-100">
     <mat-label>Bidones por semana</mat-label>
     <input type="number" matInput formControlName="cantidadBidones" />
   </mat-form-field>
 
   <!-- Precio -->
-  <mat-form-field appearance="outline" class="w-full">
+  <mat-form-field appearance="outline" class="w-100">
     <mat-label>Precio negociado</mat-label>
     <input type="number" matInput formControlName="precioNegociado" />
   </mat-form-field>
 
   <!-- Cantidad de abonos -->
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline" class="w-100">
     <mat-label>Cantidad contratada</mat-label>
     <input matInput type="number" formControlName="cantidadContratada">
   </mat-form-field>
 
   <!-- Fecha de inicio -->
-  <mat-form-field appearance="outline" class="w-full">
+  <mat-form-field appearance="outline" class="w-100">
     <mat-label>Fecha de inicio</mat-label>
     <input matInput [matDatepicker]="picker" formControlName="fechaInicio" />
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -49,7 +49,7 @@
   </mat-form-field>
 
   <!-- Fecha fijación precio -->
-  <mat-form-field appearance="outline" class="w-full">
+  <mat-form-field appearance="outline" class="w-100">
     <mat-label>Precio fijo hasta</mat-label>
     <input matInput [matDatepicker]="fijacionPicker" formControlName="fechaFijacionPrecioHasta" />
     <mat-datepicker-toggle matSuffix [for]="fijacionPicker"></mat-datepicker-toggle>

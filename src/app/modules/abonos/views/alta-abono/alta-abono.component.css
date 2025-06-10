@@ -1,4 +1,18 @@
+mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* espaciado entre campos */
+  padding-top: 12px !important;
+  max-height: 70vh;
+  overflow: auto;
+}
+
 .w-100 {
   width: 100%;
   margin-bottom: 15px;
+}
+
+mat-form-field {
+  width: 100%;
+  min-height: 64px;
 }

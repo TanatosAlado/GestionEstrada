@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { from, map, Observable } from 'rxjs';
-import { Abono } from '../models/abono.model';
 import { addDoc, collection, collectionData, deleteDoc, doc, Firestore, setDoc, updateDoc } from '@angular/fire/firestore';
 import { AbonoCliente } from '../models/abonoCliente.model';
 import { collection as col, DocumentReference, doc as firestoreDoc, getDocs, query, where } from 'firebase/firestore';
@@ -36,7 +35,7 @@ export class AbonosService {
 
 
 
-  actualizarAbono(id: string, abono: Partial<Abono>): Promise<void> {
+  actualizarAbono(id: string, abono: Partial<AbonoCliente>): Promise<void> {
     const abonoDoc = doc(this.firestore, 'Abonos', id);
     return updateDoc(abonoDoc, abono);
   }

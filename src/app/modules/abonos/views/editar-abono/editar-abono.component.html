@@ -19,6 +19,9 @@
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker startView="month"></mat-datepicker>
   </mat-form-field>
+  <mat-error *ngIf="abonoForm.get('fechaFijacionPrecioHasta')?.hasError('fechaPasada')">
+  La fecha no puede ser anterior a hoy.
+</mat-error>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
