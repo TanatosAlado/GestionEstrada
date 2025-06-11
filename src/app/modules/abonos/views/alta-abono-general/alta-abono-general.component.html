@@ -1,0 +1,54 @@
+<h2 mat-dialog-title>Nuevo Abono General</h2>
+
+<mat-dialog-content [formGroup]="form">
+
+  <!-- Descripción -->
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Descripción</mat-label>
+    <input matInput formControlName="descripcion" />
+  </mat-form-field>
+
+  <!-- Tipo de cliente -->
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Tipo de cliente</mat-label>
+    <mat-select formControlName="tipoCliente">
+      <mat-option value="particular">Particular</mat-option>
+      <mat-option value="empresa">Empresa</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Bidones 12L -->
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Bidones de 12L por semana</mat-label>
+    <input type="number" matInput formControlName="bidones12L" />
+  </mat-form-field>
+
+  <!-- Bidones 20L -->
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Bidones de 20L por semana</mat-label>
+    <input type="number" matInput formControlName="bidones20L" />
+  </mat-form-field>
+
+  <!-- Cantidad contratada -->
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Cantidad contratada (opcional)</mat-label>
+    <input type="number" matInput formControlName="cantidadContratada" />
+  </mat-form-field>
+
+  <!-- Precio -->
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Precio del abono</mat-label>
+    <input type="number" matInput formControlName="precio" />
+  </mat-form-field>
+
+  <!-- Activo -->
+  <mat-checkbox formControlName="activo">Activo</mat-checkbox>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="guardar()" [disabled]="form.invalid">
+    Guardar
+  </button>
+</mat-dialog-actions>

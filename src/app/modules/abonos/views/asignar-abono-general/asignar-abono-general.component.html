@@ -1,0 +1,22 @@
+<!-- asignar-abono-general.component.html -->
+
+<h2 mat-dialog-title>Asignar Abono General a {{ cliente.tipoCliente === 'empresa' ? cliente.razonSocial : cliente.nombre + ' ' + cliente.apellido }}</h2>
+
+<mat-dialog-content>
+  <mat-form-field appearance="fill" style="width: 100%;">
+    <mat-label>Seleccionar Abono General</mat-label>
+    <mat-select [(value)]="abonoSeleccionado">
+      <mat-option *ngFor="let abono of abonosGenerales" [value]="abono">
+         {{ abono.descripcion || '' }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div *ngIf="cargando" style="text-align: center; margin-top: 10px;">
+    <mat-progress-spinner mode="indeterminate" diameter="30"></mat-progress-spinner>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="asignarAbono()" [disabled]="cargando">Asignar</button>
+</mat-dialog-actions>

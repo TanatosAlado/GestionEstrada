@@ -11,7 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ListaProductosComponent {
   productos: Producto[] = [];
-  columnas = ['tipo', 'capacidad', 'tipoDispenser', 'stock', 'activo'];
+  columnas = ['tipo', 'capacidad', 'tipoDispenser', 'precio', 'stock', 'activo'];
 
 
   constructor(private productosService: ProductoService, private dialog: MatDialog) {}

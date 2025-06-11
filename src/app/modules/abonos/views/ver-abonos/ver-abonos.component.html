@@ -6,19 +6,29 @@
         <!-- Fecha inicio -->
         <ng-container matColumnDef="fechaInicio">
             <th mat-header-cell *matHeaderCellDef>Fecha inicio</th>
-            <td mat-cell *matCellDef="let abono">{{ abono.fechaInicio?.toDate() | date: 'shortDate' }}</td>
+            <td mat-cell *matCellDef="let abono">
+                {{ abono.fechaInicio?.toDate() | date: 'shortDate' || '-' }}
+            </td>
         </ng-container>
 
         <!-- Fecha límite -->
         <ng-container matColumnDef="fechaFijacionPrecioHasta">
             <th mat-header-cell *matHeaderCellDef>Fecha límite</th>
-            <td mat-cell *matCellDef="let abono">{{ abono.fechaFijacionPrecioHasta?.toDate() | date: 'shortDate' }}</td>
+            <td mat-cell *matCellDef="let abono">
+                {{ abono.fechaFijacionPrecioHasta?.toDate() | date: 'shortDate' || '-' }}
+            </td>
         </ng-container>
 
         <!-- N° bidones -->
         <ng-container matColumnDef="cantidadBidones">
             <th mat-header-cell *matHeaderCellDef>N° bidones</th>
-            <td mat-cell *matCellDef="let abono">{{ abono.cantidadBidones }}</td>
+            <td mat-cell *matCellDef="let abono">
+                <ng-container *ngIf="abono.bidones">
+                    12L: {{ abono.bidones['12L'] || 0 }} <br />
+                    20L: {{ abono.bidones['20L'] || 0 }}
+                </ng-container>
+            </td>
+
         </ng-container>
 
         <!-- Cantidad abonos -->
@@ -30,19 +40,28 @@
         <!-- Precio actual -->
         <ng-container matColumnDef="precioNegociado">
             <th mat-header-cell *matHeaderCellDef>Precio actual por abono</th>
-            <td mat-cell *matCellDef="let abono">{{ abono.precioNegociado | currency:'ARS' }}</td>
+            <td mat-cell *matCellDef="let abono">
+                {{ abono.precioNegociado | currency: 'ARS' }}
+            </td>
         </ng-container>
 
         <!-- Acciones -->
         <ng-container matColumnDef="acciones">
             <th mat-header-cell *matHeaderCellDef>Acciones</th>
             <td mat-cell *matCellDef="let abono">
-                <button mat-icon-button color="primary" (click)="editarAbono(abono)">
-                    <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button color="warn" (click)="eliminarAbono(abono.id)">
-                    <mat-icon>delete</mat-icon>
-                </button>
+                <ng-container *ngIf="!abono.esGeneral">
+                    <button mat-icon-button color="primary" (click)="editarAbono(abono)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="eliminarAbono(abono.id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </ng-container>
+                <ng-container *ngIf="abono.esGeneral">
+                    <button mat-icon-button color="warn" (click)="eliminarAsignacionGeneral()">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </ng-container>
             </td>
         </ng-container>
 

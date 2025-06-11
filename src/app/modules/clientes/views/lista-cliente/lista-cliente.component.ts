@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AltaClienteComponent } from '../alta-cliente/alta-cliente.component';
 import { AltaAbonoComponent } from 'src/app/modules/abonos/views/alta-abono/alta-abono.component';
 import { VerAbonosComponent } from 'src/app/modules/abonos/views/ver-abonos/ver-abonos.component';
+import { AsignarAbonoGeneralComponent } from 'src/app/modules/abonos/views/asignar-abono-general/asignar-abono-general.component';
 
 @Component({
   selector: 'app-lista-cliente',
@@ -14,7 +15,7 @@ import { VerAbonosComponent } from 'src/app/modules/abonos/views/ver-abonos/ver-
 export class ListaClienteComponent {
   clientes: Cliente[] = [];
 
-  displayedColumns: string[] = ['nombreRazon', 'tipo', 'telefono', 'acciones'];
+  displayedColumns: string[] = ['nombreRazon', 'tipo', 'telefono', 'abonos', 'acciones'];
 
 
   constructor(private clienteService: ClienteService, private dialog: MatDialog) { }
@@ -76,5 +77,18 @@ verAbonos(cliente: Cliente) {
     data: { clienteId: cliente.id }
   });
 }
+
+  abrirAsignarAbonoGeneral(cliente: Cliente) {
+    const dialogRef = this.dialog.open(AsignarAbonoGeneralComponent, {
+      width: '500px',
+      data: { cliente }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.cargarClientes();
+      }
+    });
+  }
 
 }

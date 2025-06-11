@@ -3,7 +3,8 @@ export interface Producto {
 
   tipo: 'bidon' | 'dispenser' | 'botella';  // Tipo de producto
   activo: boolean;                          // Estado del producto
-  stock: number;                            // Cantidad disponible en stock
+  stock: number;        
+  precio?: number;                    // Cantidad disponible en stock
 
   // Solo si el tipo es distinto de "dispenser"
   capacidad?: number;

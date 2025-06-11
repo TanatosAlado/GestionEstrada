@@ -34,7 +34,8 @@ export class AltaAbonoComponent {
     this.form = this.fb.group({
       clienteId: ['', Validators.required],
       tipo: ['particular', Validators.required],
-      cantidadBidones: [{ value: 4, disabled: true }, [Validators.required, Validators.min(1)]],
+      bidones12L: [0, [Validators.min(0)]],
+      bidones20L: [0, [Validators.min(0)]],
       precioNegociado: [{ value: 0, disabled: true }, [Validators.required, Validators.min(0)]],
       fechaInicio: [new Date(), Validators.required],
       fechaFijacionPrecioHasta: [{ value: null, disabled: true }],
@@ -78,11 +79,20 @@ export class AltaAbonoComponent {
       return;
     }
 
+    const totalBidones = (this.form.value.bidones12L || 0) + (this.form.value.bidones20L || 0);
+    if (totalBidones === 0) {
+      alert('Debes ingresar al menos un bidón de 12L o 20L.');
+      return;
+    }
+
     const abono: AbonoCliente = {
       clienteId: this.form.value.clienteId,
       clienteNombre: this.obtenerNombreCliente(this.clientes.find(c => c.id === this.form.value.clienteId)),
       tipo: this.form.value.tipo,
-      cantidadBidones: this.form.value.cantidadBidones,
+      bidones: {
+        '12L': this.form.value.bidones12L || 0,
+        '20L': this.form.value.bidones20L || 0
+      },
       precioNegociado: this.form.value.precioNegociado,
       fechaInicio: this.form.value.fechaInicio,
       fechaFijacionPrecioHasta: this.form.value.fechaFijacionPrecioHasta || null,

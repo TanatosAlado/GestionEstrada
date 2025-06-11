@@ -5,6 +5,8 @@ import { ListaAbonosComponent } from './views/lista-abono/lista-abono.component'
 import { SharedModule } from 'src/app/shared/shared.module';
 import { VerAbonosComponent } from './views/ver-abonos/ver-abonos.component';
 import { EditarAbonoComponent } from './views/editar-abono/editar-abono.component';
+import { AltaAbonoGeneralComponent } from './views/alta-abono-general/alta-abono-general.component';
+import { AsignarAbonoGeneralComponent } from './views/asignar-abono-general/asignar-abono-general.component';
 
 
 
@@ -13,7 +15,9 @@ import { EditarAbonoComponent } from './views/editar-abono/editar-abono.componen
     AltaAbonoComponent,
     ListaAbonosComponent,
     VerAbonosComponent,
-    EditarAbonoComponent
+    EditarAbonoComponent,
+    AltaAbonoGeneralComponent,
+    AsignarAbonoGeneralComponent
   ],
   imports: [
     CommonModule,

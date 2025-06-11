@@ -6,53 +6,64 @@
       + Nuevo Cliente
     </button>
   </div>
-  <table mat-table [dataSource]="clientes" class="mat-elevation-z2" *ngIf="clientes.length">
+<table mat-table [dataSource]="clientes" class="mat-elevation-z2" *ngIf="clientes.length">
 
-    <!-- Nombre o Razón Social -->
-    <ng-container matColumnDef="nombreRazon">
-      <th mat-header-cell *matHeaderCellDef>Nombre / Razón Social</th>
-      <td mat-cell *matCellDef="let cliente">
-        {{ cliente.tipoCliente === 'empresa' ? cliente.razonSocial : cliente.nombre + ' ' + cliente.apellido }}
-      </td>
-    </ng-container>
+  <!-- Nombre o Razón Social -->
+  <ng-container matColumnDef="nombreRazon">
+    <th mat-header-cell *matHeaderCellDef>Nombre / Razón Social</th>
+    <td mat-cell *matCellDef="let cliente">
+      {{ cliente.tipoCliente === 'empresa' ? cliente.razonSocial : cliente.nombre + ' ' + cliente.apellido }}
+    </td>
+  </ng-container>
 
-    <!-- Tipo -->
-    <ng-container matColumnDef="tipo">
-      <th mat-header-cell *matHeaderCellDef>Tipo</th>
-      <td mat-cell *matCellDef="let cliente">
-        {{ cliente.tipoCliente === 'empresa' ? 'Empresa' : 'Personal' }}
-      </td>
-    </ng-container>
+  <!-- Tipo -->
+  <ng-container matColumnDef="tipo">
+    <th mat-header-cell *matHeaderCellDef>Tipo</th>
+    <td mat-cell *matCellDef="let cliente">
+      {{ cliente.tipoCliente === 'empresa' ? 'Empresa' : 'Personal' }}
+    </td>
+  </ng-container>
 
-    <!-- Teléfono -->
-    <ng-container matColumnDef="telefono">
-      <th mat-header-cell *matHeaderCellDef>Teléfono</th>
-      <td mat-cell *matCellDef="let cliente">{{ cliente.telefono || '-' }}</td>
-    </ng-container>
+  <!-- Teléfono -->
+  <ng-container matColumnDef="telefono">
+    <th mat-header-cell *matHeaderCellDef>Teléfono</th>
+    <td mat-cell *matCellDef="let cliente">{{ cliente.telefono || '-' }}</td>
+  </ng-container>
 
-    <!-- Acciones -->
-    <ng-container matColumnDef="acciones">
-      <th mat-header-cell *matHeaderCellDef>Acciones</th>
-      <td mat-cell *matCellDef="let cliente">
-        <button mat-icon-button color="primary" (click)="editarCliente(cliente)">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button color="warn" (click)="eliminarCliente(cliente)">
-          <mat-icon>delete</mat-icon>
-        </button>
-        <button mat-icon-button color="accent" (click)="abrirAsignarAbono(cliente)">
-          <mat-icon>assignment</mat-icon>
-        </button>
-        <button mat-icon-button color="accent" (click)="verAbonos(cliente)">
-          <mat-icon>visibility</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+  <!-- Abonos (crear abono, ver abonos, asignar abono general) -->
+  <ng-container matColumnDef="abonos">
+    <th mat-header-cell *matHeaderCellDef>Abonos</th>
+    <td mat-cell *matCellDef="let cliente">
+      <button mat-icon-button color="accent" (click)="abrirAsignarAbono(cliente)" matTooltip="Crear Abono al Cliente">
+        <mat-icon>assignment</mat-icon>
+      </button>
+      <button mat-icon-button color="accent" (click)="verAbonos(cliente)" matTooltip="Ver Abonos del Cliente">
+        <mat-icon>visibility</mat-icon>
+      </button>
+      <button mat-icon-button color="accent" (click)="abrirAsignarAbonoGeneral(cliente)" matTooltip="Asignar Abono General">
+        <mat-icon>assignment_turned_in</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+  
+  <!-- Acciones (editar, borrar) -->
+  <ng-container matColumnDef="acciones">
+    <th mat-header-cell *matHeaderCellDef>Acciones</th>
+    <td mat-cell *matCellDef="let cliente">
+      <button mat-icon-button color="primary" (click)="editarCliente(cliente)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="eliminarCliente(cliente)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-  </table>
+</table>
+
 
   <p *ngIf="!clientes.length">No hay clientes registrados.</p>
 </div>
