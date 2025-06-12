@@ -128,7 +128,7 @@ export class RemitosListaComponent implements OnInit {
     return this.remitosSeleccionados.length > 0 && !this.isAllSelected();
   }
 
-  facturarSeleccionados() {
+  facturarSeleccionados(resumen: ResumenFactura) {
     if (this.remitosSeleccionados.length === 0) return;
 
     const clienteId = this.remitosSeleccionados[0].clienteId;
@@ -147,12 +147,15 @@ export class RemitosListaComponent implements OnInit {
     }
 
     const factura = {
-      clienteId: clienteId,
-      clienteNombre: clienteNombre,
+      clienteId,
+      clienteNombre,
       fecha: fechaFactura,
       remitos: remitosIds,
+      total: resumen.total,            // 💲 Monto total
+      estado: 'pendiente',             // 🔁 Estado inicial
+      productos: resumen.productos,    // (opcional, pero útil para mostrar después)
+      abono: resumen.abono || null     // (opcional, para referencia)
     };
-
 
     this.facturasService.crearFactura(factura).then(() => {
       const actualizaciones = this.remitosSeleccionados.map(remito =>
@@ -190,6 +193,7 @@ export class RemitosListaComponent implements OnInit {
     });
   }
 
+
   abrirResumenFactura(resumen: ResumenFactura) {
     const dialogRef = this.dialog.open(ResumenFacturaComponent, {
       width: '800px',
@@ -197,8 +201,8 @@ export class RemitosListaComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 'confirmar') {
-        this.facturarSeleccionados(); // llamás a la función que guarda la factura y marca remitos como facturados
+      if (result && result.total) {
+        this.facturarSeleccionados(result); // pasás el resumen con total
       }
     });
   }
@@ -212,100 +216,100 @@ export class RemitosListaComponent implements OnInit {
   }
 
 
-async calcularResumenFactura() {
-  if (this.remitosSeleccionados.length === 0) return;
+  async calcularResumenFactura() {
+    if (this.remitosSeleccionados.length === 0) return;
 
-  const clienteId = this.remitosSeleccionados[0].clienteId;
-  const clienteNombre = this.remitosSeleccionados[0].clienteNombre || '';
+    const clienteId = this.remitosSeleccionados[0].clienteId;
+    const clienteNombre = this.remitosSeleccionados[0].clienteNombre || '';
 
-  // Paso 1: Agrupar productos por capacidad
-  const contador: Record<string, number> = {};
+    // Paso 1: Agrupar productos por capacidad
+    const contador: Record<string, number> = {};
 
-  this.remitosSeleccionados.forEach(remito => {
-    remito.productos.forEach(producto => {
-      const match = producto.descripcion?.match(/(\d+)\s?L/i);
-      if (match) {
-        const capacidad = match[1];
-        contador[capacidad] = (contador[capacidad] || 0) + producto.cantidad;
-      }
+    this.remitosSeleccionados.forEach(remito => {
+      remito.productos.forEach(producto => {
+        const match = producto.descripcion?.match(/(\d+)\s?L/i);
+        if (match) {
+          const capacidad = match[1];
+          contador[capacidad] = (contador[capacidad] || 0) + producto.cantidad;
+        }
+      });
     });
-  });
 
-  // Paso 2: Obtener abono activo (personalizado o general)
-  let abono: AbonoCliente | AbonoGeneral | null = null;
-  const cliente = this.clientes.find(c => c.id === clienteId);
+    // Paso 2: Obtener abono activo (personalizado o general)
+    let abono: AbonoCliente | AbonoGeneral | null = null;
+    const cliente = this.clientes.find(c => c.id === clienteId);
 
-  if (cliente?.tipoCliente === 'empresa' && cliente.abonos?.length > 0) {
-    const ultimoAbono = cliente.abonos[cliente.abonos.length - 1];
-    try {
-      const abonoCompleto = await this.abonosService.obtenerAbonoClientePorId(ultimoAbono.abonoId);
-      if (abonoCompleto?.activo) {
-        abono = abonoCompleto;
+    if (cliente?.tipoCliente === 'empresa' && cliente.abonos?.length > 0) {
+      const ultimoAbono = cliente.abonos[cliente.abonos.length - 1];
+      try {
+        const abonoCompleto = await this.abonosService.obtenerAbonoClientePorId(ultimoAbono.abonoId);
+        if (abonoCompleto?.activo) {
+          abono = abonoCompleto;
+        }
+      } catch (error) {
+        console.warn('No se pudo obtener el abono personalizado por ID:', error);
       }
-    } catch (error) {
-      console.warn('No se pudo obtener el abono personalizado por ID:', error);
-    }
-  }
-
-  if (!abono) {
-    abono = await firstValueFrom(this.abonosService.obtenerAbonoGeneralAsignado(clienteId));
-  }
-
-  // Paso 3: Obtener precios desde Productos
-  const productos = await this.productoService.getProductosActivosPromise();
-
-  let total = 0;
-  const productosResumen = [];
-
-  for (const capacidadStr of Object.keys(contador)) {
-    const capacidad = Number(capacidadStr);
-    const cantidad = contador[capacidadStr];
-
-    const producto = productos.find(p => p.capacidad === capacidad && p.activo);
-    const precioUnitario = producto?.precio || 0;
-
-    const semanas = this.remitosSeleccionados.length;
-    let cantidadContratada = 1;
-
-    if ('cantidadContratada' in abono && typeof abono.cantidadContratada === 'number') {
-      cantidadContratada = abono.cantidadContratada;
     }
 
-    const bidonesPorSemana = abono?.bidones?.[`${capacidad}L`] ?? 0;
-    const cantidadCubiertaTotal = bidonesPorSemana * cantidadContratada * semanas;
+    if (!abono) {
+      abono = await firstValueFrom(this.abonosService.obtenerAbonoGeneralAsignado(clienteId));
+    }
 
-    const cubiertos = Math.min(cantidad, cantidadCubiertaTotal);
-    const excedente = cantidad - cubiertos;
-    const subtotal = excedente * precioUnitario;
+    // Paso 3: Obtener precios desde Productos
+    const productos = await this.productoService.getProductosActivosPromise();
 
-    total += subtotal;
+    let total = 0;
+    const productosResumen = [];
 
-    productosResumen.push({
-      tipo: 'bidon',
-      capacidad,
-      cantidad,
-      cubiertosPorAbono: cubiertos,
-      excedente,
-      precioUnitario,
-      subtotal
-    });
+    for (const capacidadStr of Object.keys(contador)) {
+      const capacidad = Number(capacidadStr);
+      const cantidad = contador[capacidadStr];
+
+      const producto = productos.find(p => p.capacidad === capacidad && p.activo);
+      const precioUnitario = producto?.precio || 0;
+
+      const semanas = this.remitosSeleccionados.length;
+      let cantidadContratada = 1;
+
+      if ('cantidadContratada' in abono && typeof abono.cantidadContratada === 'number') {
+        cantidadContratada = abono.cantidadContratada;
+      }
+
+      const bidonesPorSemana = abono?.bidones?.[`${capacidad}L`] ?? 0;
+      const cantidadCubiertaTotal = bidonesPorSemana * cantidadContratada * semanas;
+
+      const cubiertos = Math.min(cantidad, cantidadCubiertaTotal);
+      const excedente = cantidad - cubiertos;
+      const subtotal = excedente * precioUnitario;
+
+      total += subtotal;
+
+      productosResumen.push({
+        tipo: 'bidon',
+        capacidad,
+        cantidad,
+        cubiertosPorAbono: cubiertos,
+        excedente,
+        precioUnitario,
+        subtotal
+      });
+    }
+
+    // ✅ Paso adicional: sumar el costo del abono por la cantidad de remitos
+    if (abono) {
+      const precioAbono = abono['precioNegociado'] || abono['precio'] || 0;
+      const cantidadRemitos = this.remitosSeleccionados.length;
+      total += precioAbono * cantidadRemitos;
+    }
+
+    this.resumenCalculado = {
+      clienteId,
+      clienteNombre,
+      abono,
+      productos: productosResumen,
+      total
+    };
   }
-
-  // ✅ Paso adicional: sumar el costo del abono por la cantidad de remitos
-  if (abono) {
-    const precioAbono = abono['precioNegociado'] || abono['precio'] || 0;
-    const cantidadRemitos = this.remitosSeleccionados.length;
-    total += precioAbono * cantidadRemitos;
-  }
-
-  this.resumenCalculado = {
-    clienteId,
-    clienteNombre,
-    abono,
-    productos: productosResumen,
-    total
-  };
-}
 
 
 }

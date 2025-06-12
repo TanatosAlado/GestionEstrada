@@ -27,17 +27,19 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChipsModule } from '@angular/material/chips';
+import { EncabezadoComponent } from './components/encabezado/encabezado.component';
 
 
 
 
 
 @NgModule({
-  declarations: [NavbarComponent, FooterComponent],
+  declarations: [NavbarComponent, FooterComponent, EncabezadoComponent],
   imports: [
     CommonModule, MatDialogModule, RouterModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSlideToggleModule, MatDividerModule, MatSnackBarModule, MatTooltipModule, MatBadgeModule, MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatOptionModule, MatButtonToggleModule, MatProgressSpinnerModule, MatChipsModule
   ],
   exports: [
+    EncabezadoComponent,
     NavbarComponent,
     FooterComponent,
     MatDialogModule, RouterModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSlideToggleModule, MatDividerModule, MatSnackBarModule, MatTooltipModule, MatBadgeModule, MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatOptionModule, MatButtonToggleModule, MatProgressSpinnerModule, MatChipsModule

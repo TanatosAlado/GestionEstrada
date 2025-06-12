@@ -14,7 +14,7 @@ export class ResumenFacturaComponent {
   ) {}
 
   confirmar() {
-    this.dialogRef.close('confirmar');
+    this.dialogRef.close(this.resumen);
   }
 
   cancelar() {
