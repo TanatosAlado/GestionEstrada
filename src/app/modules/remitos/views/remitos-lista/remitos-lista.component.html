@@ -17,7 +17,7 @@
 </div>
 
 <div style="margin-top: 1rem;">
-  <button mat-raised-button color="primary" (click)="facturarSeleccionados()" [disabled]="remitosSeleccionados.length === 0">
+  <button mat-raised-button color="primary" (click)="abrirResumenFactura(resumenCalculado)" [disabled]="remitosSeleccionados.length === 0">
     Facturar seleccionados
   </button>
 </div>
@@ -79,3 +79,4 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </mat-table>
+

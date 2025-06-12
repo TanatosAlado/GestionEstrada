@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>Resumen de Factura</h2>
+
+<mat-dialog-content *ngIf="resumen && resumen.productos">
+  <table class="mat-elevation-z1">
+    <thead>
+      <tr>
+        <th>Capacidad</th>
+        <th>Cantidad</th>
+        <th>Cubiertos por Abono</th>
+        <th>Excedente</th>
+        <th>Precio Unitario</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of resumen.productos">
+        <td>{{ p.capacidad }}L</td>
+        <td>{{ p.cantidad }}</td>
+        <td>{{ p.cubiertosPorAbono }}</td>
+        <td>{{ p.excedente }}</td>
+        <td>${{ p.precioUnitario }}</td>
+        <td>${{ p.subtotal }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="mt-4"><strong>Total a facturar:</strong> ${{ resumen.total }}</p>
+
+  <ng-container *ngIf="resumen.abono">
+    <p class="mt-3">
+      <strong>Tipo de abono:</strong>
+      {{ resumen.abono['tipo'] || resumen.abono['tipoCliente'] }}
+    </p>
+    <p>
+      <strong>Precio del abono:</strong>
+      ${{ resumen.abono['precioNegociado'] || resumen.abono['precio'] }}
+    </p>
+  </ng-container>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button mat-flat-button color="primary" (click)="confirmar()">Confirmar y facturar</button>
+</mat-dialog-actions>

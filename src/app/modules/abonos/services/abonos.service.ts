@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { from, map, Observable, of, switchMap } from 'rxjs';
+import { firstValueFrom, from, map, Observable, of, switchMap } from 'rxjs';
 import { addDoc, collection, collectionData, deleteDoc, doc, Firestore, setDoc, updateDoc } from '@angular/fire/firestore';
 import { AbonoCliente } from '../models/abonoCliente.model';
 import { collection as col, DocumentReference, doc as firestoreDoc, getDoc, getDocs, query, where } from 'firebase/firestore';
@@ -12,6 +12,8 @@ export class AbonosService {
 
   private abonosRef = collection(this.firestore, 'Abonos');
   private abonosGeneralesCollection = collection(this.firestore, 'AbonosGenerales');
+  private abonosClientesRef = collection(this.firestore, 'abonosClientes');
+
 
   constructor(private firestore: Firestore) { }
 
@@ -139,6 +141,26 @@ async asignarAbonoGeneralACliente(clienteId: string, abonoGeneralId: string): Pr
   const docRef = doc(this.firestore, 'clienteAbonosGenerales', nuevoDocRef.id);
   await updateDoc(docRef, { id: nuevoDocRef.id });
 }
+
+  async obtenerAbonoActivoPorCliente(clienteId: string): Promise<AbonoCliente | null> {
+    const snapshot = await getDocs(
+      query(this.abonosClientesRef, where('clienteId', '==', clienteId), where('activo', '==', true))
+    );
+
+    const abonos = snapshot.docs.map(doc => doc.data() as AbonoCliente);
+    return abonos.length > 0 ? abonos[0] : null;
+  }
+
+  async obtenerAbonoClientePorId(id: string): Promise<AbonoCliente> {
+    const docRef = doc(this.firestore, 'Abonos', id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return { ...(docSnap.data() as AbonoCliente), id: docSnap.id };
+    } else {
+      throw new Error('AbonoCliente no encontrado');
+    }
+  }
 
 
 }

@@ -27,6 +27,7 @@ export class AltaAbonoComponent {
   ) { }
 
   ngOnInit(): void {
+
     this.clienteService.obtenerClientes().subscribe(clientes => {
       this.clientes = clientes;
     });
@@ -84,9 +85,17 @@ export class AltaAbonoComponent {
       alert('Debes ingresar al menos un bidón de 12L o 20L.');
       return;
     }
+    console.log('Datos:', this.form.value);
+
+    let _clienteID: string = ""
+    if(this.data) {
+      _clienteID = this.data.cliente?.id;
+    }else{
+      _clienteID = this.form.value.clienteId;
+    }
 
     const abono: AbonoCliente = {
-      clienteId: this.form.value.clienteId,
+      clienteId: _clienteID,
       clienteNombre: this.obtenerNombreCliente(this.clientes.find(c => c.id === this.form.value.clienteId)),
       tipo: this.form.value.tipo,
       bidones: {
@@ -100,6 +109,7 @@ export class AltaAbonoComponent {
       cantidadContratada: this.form.value.cantidadContratada
     };
 
+    console.log('Abono a guardar:', abono);
     try {
       const abonoRef = await this.abonoService.crearAbono(abono); // 👈 devuelve ref con ID
       const abonoId = abonoRef.id;

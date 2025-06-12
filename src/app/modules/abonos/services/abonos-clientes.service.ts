@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { collection, collectionData, doc, Firestore, addDoc, updateDoc, deleteDoc, docData, setDoc, query, where } from '@angular/fire/firestore';
-import { AbonoCliente } from '../models/abonoCliente.model'; 
+import { collection, collectionData, doc, Firestore, addDoc, updateDoc, deleteDoc, docData, setDoc, query, where, getDocs } from '@angular/fire/firestore';
+import { AbonoCliente } from '../models/abonoCliente.model';
 import { from, Observable } from 'rxjs';
 
 @Injectable({
@@ -10,20 +10,20 @@ export class AbonosClientesService {
 
   private abonosClientesRef = collection(this.firestore, 'abonosClientes');
 
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore) { }
 
   crearAsignacion(asignacion: AbonoCliente): Promise<void> {
     const id = doc(this.abonosClientesRef).id; // Generar un nuevo ID
     return setDoc(doc(this.firestore, 'abonosClientes', id), { ...asignacion, id });
   }
 
-obtenerAsignacionesPorCliente(clienteId: string): Observable<AbonoCliente[]> {
-  const abonosClienteQuery = query(
-    this.abonosClientesRef,
-    where('clienteId', '==', clienteId)
-  );
-  return collectionData(abonosClienteQuery, { idField: 'id' }) as Observable<AbonoCliente[]>;
-}
+  obtenerAsignacionesPorCliente(clienteId: string): Observable<AbonoCliente[]> {
+    const abonosClienteQuery = query(
+      this.abonosClientesRef,
+      where('clienteId', '==', clienteId)
+    );
+    return collectionData(abonosClienteQuery, { idField: 'id' }) as Observable<AbonoCliente[]>;
+  }
 
   actualizarAsignacion(id: string, datos: Partial<AbonoCliente>): Promise<void> {
     const ref = doc(this.firestore, `abonosClientes/${id}`);
@@ -40,8 +40,10 @@ obtenerAsignacionesPorCliente(clienteId: string): Observable<AbonoCliente[]> {
     return docData(ref, { idField: 'id' }) as Observable<AbonoCliente>;
   }
 
-    crearAbono(abono: AbonoCliente): Promise<void> {
-      const id = doc(this.abonosClientesRef).id;
-      return setDoc(doc(this.firestore, 'Abonos', id), { ...abono, id });
-    }
+  crearAbono(abono: AbonoCliente): Promise<void> {
+    const id = doc(this.abonosClientesRef).id;
+    return setDoc(doc(this.firestore, 'Abonos', id), { ...abono, id });
+  }
+
+
 }
