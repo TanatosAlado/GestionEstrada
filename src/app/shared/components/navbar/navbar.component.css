@@ -1,4 +1,18 @@
-h2 {
-    text-align: center;
+.navbar{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
     background-color: #a2c149;
+    color: white;
+}
+
+.navbar img{
+    height: 70px;
+    width: 70px;
+}
+
+.navbar h2{
+    margin-left: 50px;
+    font-size: 1.7em;
+    font-weight: bold;
 }

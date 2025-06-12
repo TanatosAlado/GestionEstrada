@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>Detalle de Factura</h2>
+
+<mat-dialog-content>
+  <p><strong>Cliente:</strong> {{ factura.clienteNombre }}</p>
+  <p><strong>Fecha:</strong> {{ factura.fecha?.toDate ? (factura.fecha.toDate() | date) : '-' }}</p>
+  <p><strong>Total:</strong> ${{ factura.total }}</p>
+  <p><strong>Estado:</strong> {{ factura.estado === 'abonada' ? 'Abonada' : 'Pendiente' }}</p>
+
+  <div *ngIf="factura.remitos?.length > 0">
+    <p><strong>Remitos incluidos:</strong></p>
+    <ul>
+      <li *ngFor="let remitoId of factura.remitos">
+        ID: {{ remitoId }}
+      </li>
+    </ul>
+
+    <button mat-button color="primary" (click)="cargarRemitos()" *ngIf="!remitosCargados && !cargandoRemitos">
+      Ver remitos
+    </button>
+
+    <mat-spinner diameter="24" *ngIf="cargandoRemitos"></mat-spinner>
+  </div>
+
+  <!-- Tabla de remitos ya cargados -->
+  <div *ngIf="remitosCargados && remitos.length > 0">
+    <h4>Remitos incluidos</h4>
+    <table mat-table [dataSource]="remitos" class="mat-elevation-z1">
+
+      <!-- Fecha -->
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef>Fecha</th>
+        <td mat-cell *matCellDef="let remito">{{ remito?.fecha?.toDate() | date }}</td>
+      </ng-container>
+
+      <!-- Productos -->
+      <ng-container matColumnDef="productos">
+        <th mat-header-cell *matHeaderCellDef>Productos</th>
+        <td mat-cell *matCellDef="let remito">
+          <ul>
+            <li *ngFor="let p of remito.productos">
+              {{ p.descripcion }} x{{ p.cantidad }}
+            </li>
+          </ul>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="['fecha', 'productos']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['fecha', 'productos'];"></tr>
+    </table>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

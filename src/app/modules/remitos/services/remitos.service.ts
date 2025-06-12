@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { addDoc, collection, doc, Firestore, getDoc, getDocs, updateDoc } from '@angular/fire/firestore';
+import { addDoc, collection, doc, docData, Firestore, getDoc, getDocs, updateDoc } from '@angular/fire/firestore';
 import { RemitoCliente } from '../models/remitoCliente.model';
 import { CargaService } from '../../cargas/services/carga.service';
 import { from, map, Observable } from 'rxjs';
@@ -119,6 +119,10 @@ marcarRemitoComoFacturado(remitoId: string): Promise<void> {
   return updateDoc(remitoDocRef, { facturado: true });
 }
 
+  obtenerRemitoPorId(id: string): Observable<RemitoCliente> {
+    const ref = doc(this.firestore, `RemitosClientes/${id}`);
+    return docData(ref, { idField: 'id' }) as Observable<RemitoCliente>;
+  }
 
 
 }

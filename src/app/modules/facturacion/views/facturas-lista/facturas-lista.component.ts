@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FacturasService } from '../../services/facturas.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FacturaDetalleComponent } from '../factura-detalle/factura-detalle.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-facturas-lista',
@@ -12,7 +14,7 @@ export class FacturasListaComponent {
   facturas: any[] = [];
   columnas: string[] = ['cliente', 'fecha', 'total', 'estado', 'acciones'];
 
-  constructor(private facturasService: FacturasService, private snackBar: MatSnackBar) { }
+  constructor(private facturasService: FacturasService, private snackBar: MatSnackBar, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.facturasService.obtenerFacturas().subscribe(data => {
@@ -31,7 +33,12 @@ export class FacturasListaComponent {
 }
 
 verDetalle(factura: any) {
-  // Podés abrir un diálogo con los productos o abono
+  this.dialog.open(FacturaDetalleComponent, {
+    width: '600px',
+    data: factura
+  });
 }
+
+
 
 }
