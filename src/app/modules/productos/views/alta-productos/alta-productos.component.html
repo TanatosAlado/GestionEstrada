@@ -13,7 +13,7 @@
 
   <mat-form-field appearance="fill" *ngIf="productoForm.get('tipo')?.value !== 'dispenser'">
     <mat-label>Capacidad</mat-label>
-    <input matInput type="number" formControlName="capacidad">
+    <input matInput type="number" formControlName="capacidad" />
   </mat-form-field>
 
   <mat-form-field appearance="fill" *ngIf="productoForm.get('tipo')?.value === 'dispenser'">
@@ -26,13 +26,15 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Stock</mat-label>
-    <input matInput type="number" formControlName="stock" required>
+    <input matInput type="number" formControlName="stock" required />
   </mat-form-field>
 
   <mat-checkbox formControlName="activo">Activo</mat-checkbox>
 
   <div class="acciones">
     <button mat-button type="button" (click)="cancelar()">Cancelar</button>
-    <button mat-raised-button color="primary" type="submit" [disabled]="productoForm.invalid">Guardar</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="productoForm.invalid">
+      Guardar
+    </button>
   </div>
 </form>

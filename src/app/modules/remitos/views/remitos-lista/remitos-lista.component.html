@@ -1,86 +1,87 @@
 <app-encabezado>
-    Gestión de Remitos
+  Gestión de Remitos
 </app-encabezado>
 
-<div class="filtros-container">
-  <!-- Filtro por cliente -->
-  <mat-form-field appearance="outline">
-    <mat-label>Cliente</mat-label>
-    <mat-select (selectionChange)="onClienteSeleccionado($event.value)">
-      <mat-option [value]="null">Todos</mat-option>
-      <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">{{ cliente.nombre }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+<div class="contenedor-lista">
 
-  <!-- Filtro por facturado -->
-  <mat-button-toggle-group (change)="onEstadoFacturacionSeleccionado($event.value)" appearance="legacy">
-    <mat-button-toggle [value]="null">Todos</mat-button-toggle>
-    <mat-button-toggle [value]="true">Facturados</mat-button-toggle>
-    <mat-button-toggle [value]="false">No Facturados</mat-button-toggle>
-  </mat-button-toggle-group>
-</div>
+  <div class="filtros-container">
+    <mat-form-field appearance="outline" style="width: 250px; margin-right: 1rem;">
+      <mat-label>Cliente</mat-label>
+      <mat-select (selectionChange)="onClienteSeleccionado($event.value)" [value]="clienteSeleccionado">
+        <mat-option [value]="null">Todos</mat-option>
+        <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">{{ cliente.nombre }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-<div style="margin-top: 1rem;">
-  <button mat-raised-button color="primary" (click)="abrirResumenFactura(resumenCalculado)" [disabled]="remitosSeleccionados.length === 0">
-    Facturar seleccionados
-  </button>
-</div>
+    <mat-button-toggle-group (change)="onEstadoFacturacionSeleccionado($event.value)" appearance="legacy"
+      [value]="estadoFacturacionSeleccionado">
+      <mat-button-toggle [value]="null">Todos</mat-button-toggle>
+      <mat-button-toggle [value]="true">Facturados</mat-button-toggle>
+      <mat-button-toggle [value]="false">No Facturados</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
 
-<mat-table [dataSource]="dataSource" class="mat-elevation-z8"> 
-    <!-- ✅ Columna de selección -->
-  <ng-container matColumnDef="select">
-    <th mat-header-cell *matHeaderCellDef>
-      <mat-checkbox
-        (change)="toggleSeleccionarTodos($event)"
-        [checked]="isAllSelected()"
-        [indeterminate]="isSomeSelected()">
-      </mat-checkbox>
-    </th>
-    <td mat-cell *matCellDef="let remito">
-      <mat-checkbox
-        [disabled]="remito.facturado"
-        (change)="toggleSeleccion(remito)"
-        [checked]="estaSeleccionado(remito)">
-      </mat-checkbox>
-    </td>
-  </ng-container>
-
-  <!-- Cliente -->
-  <ng-container matColumnDef="cliente">
-    <th mat-header-cell *matHeaderCellDef> Cliente </th>
-    <td mat-cell *matCellDef="let remito"> {{ remito.clienteNombre }} </td>
-  </ng-container>
-
-  <!-- Fecha -->
-  <ng-container matColumnDef="fecha">
-    <th mat-header-cell *matHeaderCellDef> Fecha </th>
-    <td mat-cell *matCellDef="let remito"> {{ remito.fecha.toDate() | date:'shortDate' }} </td>
-  </ng-container>
-
-  <!-- Repartidor -->
-  <ng-container matColumnDef="repartidor">
-    <th mat-header-cell *matHeaderCellDef> Repartidor </th>
-    <td mat-cell *matCellDef="let remito"> {{ remito.repartidorNombre }} </td>
-  </ng-container>
-
-  <!-- Facturado -->
-  <ng-container matColumnDef="facturado">
-    <th mat-header-cell *matHeaderCellDef> Facturado </th>
-    <td mat-cell *matCellDef="let remito"> {{ remito.facturado ? 'Sí' : 'No' }} </td>
-  </ng-container>
-
-  <!-- Acciones -->
-<ng-container matColumnDef="acciones">
-  <th mat-header-cell *matHeaderCellDef> Acciones </th>
-  <td mat-cell *matCellDef="let remito">
-    <button mat-button color="primary" (click)="verDetalle(remito)">
-      Ver detalle
+  <div class="acciones" style="margin-top: 1rem;">
+    <button mat-raised-button color="primary" (click)="abrirResumenFactura(resumenCalculado)"
+      [disabled]="remitosSeleccionados.length === 0">
+      Facturar seleccionados
     </button>
-  </td>
-</ng-container>
+  </div>
 
-  <!-- Header y Rows -->
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</mat-table>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
 
+    <!-- Selección -->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="toggleSeleccionarTodos($event)" [checked]="isAllSelected()"
+          [indeterminate]="isSomeSelected()"></mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let remito">
+        <mat-checkbox [disabled]="remito.facturado" (change)="toggleSeleccion(remito)"
+          [checked]="estaSeleccionado(remito)"></mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- Cliente -->
+    <ng-container matColumnDef="cliente">
+      <th mat-header-cell *matHeaderCellDef> Cliente </th>
+      <td mat-cell *matCellDef="let remito"> {{ remito.clienteNombre }} </td>
+    </ng-container>
+
+    <!-- Fecha -->
+    <ng-container matColumnDef="fecha">
+      <th mat-header-cell *matHeaderCellDef> Fecha </th>
+      <td mat-cell *matCellDef="let remito"> {{ remito.fecha.toDate() | date:'shortDate' }} </td>
+    </ng-container>
+
+    <!-- Repartidor -->
+    <ng-container matColumnDef="repartidor">
+      <th mat-header-cell *matHeaderCellDef> Repartidor </th>
+      <td mat-cell *matCellDef="let remito"> {{ remito.repartidorNombre }} </td>
+    </ng-container>
+
+    <!-- Facturado -->
+    <ng-container matColumnDef="facturado">
+      <th mat-header-cell *matHeaderCellDef> Facturado </th>
+      <td mat-cell *matCellDef="let remito"> {{ remito.facturado ? 'Sí' : 'No' }} </td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let remito">
+        <button mat-button color="primary" (click)="verDetalle(remito)">Ver detalle</button>
+      </td>
+    </ng-container>
+
+    <!-- Header y filas -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <p *ngIf="!dataSource?.data?.length" style="margin-top: 1rem; text-align: center;">
+    No hay remitos para mostrar.
+  </p>
+
+
+</div>

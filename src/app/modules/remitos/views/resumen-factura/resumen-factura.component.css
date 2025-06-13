@@ -1,0 +1,60 @@
+/* Estilos tabla resumen factura */
+table.mat-elevation-z1 {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
+}
+
+table.mat-elevation-z1 thead {
+  background-color: #1976d2; /* azul material */
+  color: white;
+}
+
+table.mat-elevation-z1 th,
+table.mat-elevation-z1 td {
+  padding: 8px 12px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+table.mat-elevation-z1 tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Texto total */
+p.mt-4 {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: right;
+}
+
+/* Texto de abono */
+p.mt-3 {
+  margin-top: 0.75rem;
+  font-weight: 500;
+  color: #555;
+  text-align: right;
+}
+
+/* Dialog actions */
+mat-dialog-actions {
+  margin-top: 1.5rem;
+}
+
+/* Responsividad */
+@media (max-width: 600px) {
+  table.mat-elevation-z1 th,
+  table.mat-elevation-z1 td {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  p.mt-4, p.mt-3 {
+    text-align: left;
+    font-size: 13px;
+  }
+}

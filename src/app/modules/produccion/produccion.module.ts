@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AltaProduccionComponent } from './views/alta-produccion/alta-produccion.component';
 import { ListaProduccionComponent } from './views/lista-produccion/lista-produccion.component';
-import { DetalleProduccionComponent } from './views/detalle-produccion/detalle-produccion.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 
@@ -11,7 +10,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
   declarations: [
     AltaProduccionComponent,
     ListaProduccionComponent,
-    DetalleProduccionComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +18,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
   exports: [
     AltaProduccionComponent,
     ListaProduccionComponent,
-    DetalleProduccionComponent
   ],
 })
 export class ProduccionModule { }

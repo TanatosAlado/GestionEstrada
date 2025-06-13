@@ -2,58 +2,68 @@
   Gestión de Facturas
 </app-encabezado>
 
-<table mat-table [dataSource]="facturas" class="mat-elevation-z1">
-  <!-- Cliente -->
-  <ng-container matColumnDef="cliente">
-    <th mat-header-cell *matHeaderCellDef>Cliente</th>
-    <td mat-cell *matCellDef="let factura">{{ factura.clienteNombre }}</td>
-  </ng-container>
+<div class="contenedor-lista">
 
-  <!-- Fecha -->
-  <ng-container matColumnDef="fecha">
-    <th mat-header-cell *matHeaderCellDef>Fecha</th>
-    <td mat-cell *matCellDef="let factura">{{ factura.fecha.toDate() | date }}</td>
-  </ng-container>
+  <table mat-table [dataSource]="facturas" class="mat-elevation-z2" *ngIf="facturas.length">
 
-  <!-- Total -->
-  <ng-container matColumnDef="total">
-    <th mat-header-cell *matHeaderCellDef>Total</th>
-    <td mat-cell *matCellDef="let factura">${{ factura.total }}</td>
-  </ng-container>
+    <!-- Cliente -->
+    <ng-container matColumnDef="cliente">
+      <th mat-header-cell *matHeaderCellDef>Cliente</th>
+      <td mat-cell *matCellDef="let factura">{{ factura.clienteNombre }}</td>
+    </ng-container>
 
-  <!-- Saldo -->
-  <ng-container matColumnDef="saldo">
-    <th mat-header-cell *matHeaderCellDef>Saldo</th>
-    <td mat-cell *matCellDef="let factura">${{ factura.total - factura.pagosRecibidos }}</td>
-  </ng-container>
+    <!-- Fecha -->
+    <ng-container matColumnDef="fecha">
+      <th mat-header-cell *matHeaderCellDef>Fecha</th>
+      <td mat-cell *matCellDef="let factura">{{ factura.fecha.toDate() | date:'dd/MM/yyyy' }}</td>
+    </ng-container>
 
-  <!-- Estado -->
-  <ng-container matColumnDef="estado">
-    <th mat-header-cell *matHeaderCellDef>Estado</th>
-    <td mat-cell *matCellDef="let factura">
-<span class="badge"
-      [ngClass]="{
-        'badge-abonada': factura.estado === 'abonada',
-        'badge-parcial': factura.estado === 'pago parcial',
-        'badge-pendiente': factura.estado === 'pendiente'
-      }">
-  {{
-    factura.estado === 'abonada' ? 'Abonada' :
-    factura.estado === 'pago parcial' ? 'Pago parcial' :
-    'Pendiente'
-  }}
-</span>
-    </td>
-  </ng-container>
+    <!-- Total -->
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef>Total</th>
+      <td mat-cell *matCellDef="let factura">${{ factura.total | number:'1.2-2' }}</td>
+    </ng-container>
 
-  <!-- Acciones -->
-  <ng-container matColumnDef="acciones">
-    <th mat-header-cell *matHeaderCellDef>Acciones</th>
-    <td mat-cell *matCellDef="let factura">
-      <button mat-button (click)="verDetalle(factura)">Ver</button>
-    </td>
-  </ng-container>
+    <!-- Saldo -->
+    <ng-container matColumnDef="saldo">
+      <th mat-header-cell *matHeaderCellDef>Saldo</th>
+      <td mat-cell *matCellDef="let factura">${{ (factura.total - factura.pagosRecibidos) | number:'1.2-2' }}</td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="columnas"></tr>
-  <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
-</table>
+    <!-- Estado -->
+    <ng-container matColumnDef="estado">
+      <th mat-header-cell *matHeaderCellDef>Estado</th>
+      <td mat-cell *matCellDef="let factura">
+        <span class="badge"
+          [ngClass]="{
+            'badge-abonada': factura.estado === 'abonada',
+            'badge-parcial': factura.estado === 'pago parcial',
+            'badge-pendiente': factura.estado === 'pendiente'
+          }">
+          {{
+            factura.estado === 'abonada' ? 'Abonada' :
+            factura.estado === 'pago parcial' ? 'Pago parcial' :
+            'Pendiente'
+          }}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let factura">
+        <button mat-icon-button color="accent" (click)="verDetalle(factura)">
+          <mat-icon>visibility</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
+  <p *ngIf="!facturas.length">No hay facturas registradas.</p>
+
+</div>

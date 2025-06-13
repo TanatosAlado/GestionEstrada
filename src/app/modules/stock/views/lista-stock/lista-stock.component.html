@@ -1,62 +1,70 @@
 <app-encabezado>
-    Gestión de Stock
+  Gestión de Stock
 </app-encabezado>
 
-<table mat-table [dataSource]="stock" class="mat-elevation-z8">
+<div class="contenedor-lista">
 
-  <!-- Tipo -->
-  <ng-container matColumnDef="tipo">
-    <th mat-header-cell *matHeaderCellDef> Tipo </th>
-    <td mat-cell *matCellDef="let element"> {{ element.tipo }} </td>
-  </ng-container>
+  <div class="acciones">
+    <!-- Podés agregar aquí un botón si querés, ejemplo: -->
+    <!-- <button mat-raised-button color="primary" (click)="abrirAltaProducto()">+ Nuevo Producto</button> -->
+  </div>
 
-  <!-- Capacidad -->
-  <ng-container matColumnDef="capacidad">
-    <th mat-header-cell *matHeaderCellDef> Capacidad </th>
-    <td mat-cell *matCellDef="let element">
-      {{ element.tipo === 'bidon' ? element.capacidad + ' L' : '-' }}
-    </td>
-  </ng-container>
+  <table mat-table [dataSource]="stock" class="mat-elevation-z8" *ngIf="stock?.length">
 
-  <!-- Tipo Dispenser -->
-  <ng-container matColumnDef="tipoDispenser">
-    <th mat-header-cell *matHeaderCellDef> Tipo Dispenser </th>
-    <td mat-cell *matCellDef="let element">
-      {{ element.tipo === 'dispenser' ? element.tipoDispenser : '-' }}
-    </td>
-  </ng-container>
+    <!-- Tipo -->
+    <ng-container matColumnDef="tipo">
+      <th mat-header-cell *matHeaderCellDef> Tipo </th>
+      <td mat-cell *matCellDef="let element"> {{ element.tipo }} </td>
+    </ng-container>
 
-  <!-- Stock (editable) -->
-<ng-container matColumnDef="stock">
-  <th mat-header-cell *matHeaderCellDef> Stock </th>
-  <td mat-cell *matCellDef="let producto">
-    <input
-      type="number"
-      [(ngModel)]="producto.stock"
-      (ngModelChange)="onStockChange(producto)"
-      min="0"
-      style="width: 80px;"
-    />
+    <!-- Capacidad -->
+    <ng-container matColumnDef="capacidad">
+      <th mat-header-cell *matHeaderCellDef> Capacidad </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.tipo === 'bidon' ? element.capacidad + ' L' : '-' }}
+      </td>
+    </ng-container>
 
-  </td>
-</ng-container>
+    <!-- Tipo Dispenser -->
+    <ng-container matColumnDef="tipoDispenser">
+      <th mat-header-cell *matHeaderCellDef> Tipo Dispenser </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.tipo === 'dispenser' ? element.tipoDispenser : '-' }}
+      </td>
+    </ng-container>
 
+    <!-- Stock (editable) -->
+    <ng-container matColumnDef="stock">
+      <th mat-header-cell *matHeaderCellDef> Stock </th>
+      <td mat-cell *matCellDef="let producto">
+        <input
+          type="number"
+          [(ngModel)]="producto.stock"
+          (ngModelChange)="onStockChange(producto)"
+          min="0"
+          />
+      </td>
+    </ng-container>
 
-  <!-- Guardar cambios -->
-  <ng-container matColumnDef="acciones">
-    <th mat-header-cell *matHeaderCellDef> Guardar </th>
-    <td mat-cell *matCellDef="let producto">
-    <button
-      mat-icon-button
-      [color]="fueEditado(producto.id) ? 'accent' : 'primary'"
-      (click)="guardarStock(producto)"
-    >
-      <mat-icon>save</mat-icon>
-    </button>
-    </td>
-  </ng-container>
+    <!-- Guardar cambios -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef> Guardar </th>
+      <td mat-cell *matCellDef="let producto">
+        <button
+          mat-icon-button
+          [color]="fueEditado(producto.id) ? 'accent' : 'primary'"
+          (click)="guardarStock(producto)"
+        >
+          <mat-icon>save</mat-icon>
+        </button>
+      </td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="['tipo', 'capacidad', 'tipoDispenser', 'stock', 'acciones']"></tr>
-  <tr mat-row *matRowDef="let row; columns: ['tipo', 'capacidad', 'tipoDispenser', 'stock', 'acciones'];"></tr>
+    <tr mat-header-row *matHeaderRowDef="['tipo', 'capacidad', 'tipoDispenser', 'stock', 'acciones']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['tipo', 'capacidad', 'tipoDispenser', 'stock', 'acciones'];"></tr>
 
-</table>
+  </table>
+
+  <p *ngIf="!stock?.length" style="text-align:center; margin-top:1rem;">No hay productos en stock.</p>
+
+</div>

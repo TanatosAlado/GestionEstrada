@@ -1,0 +1,57 @@
+.contenedor-formulario {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  font-family: 'Roboto', sans-serif;
+}
+
+.titulo-formulario {
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.formulario-alta {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.text-error {
+  color: #d32f2f;
+  font-weight: 500;
+}
+
+.facturas-asignacion {
+  margin-top: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid #ddd;
+}
+
+.factura-item {
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.factura-item input {
+  width: 100px;
+  margin-left: 1rem;
+}
+
+.botones {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}

@@ -6,7 +6,6 @@ import { GestionesComponent } from './modules/home/ui/gestiones/gestiones.compon
 
 import { AltaProduccionComponent } from './modules/produccion/views/alta-produccion/alta-produccion.component';
 import { ListaProduccionComponent } from './modules/produccion/views/lista-produccion/lista-produccion.component';
-import { DetalleProduccionComponent } from './modules/produccion/views/detalle-produccion/detalle-produccion.component';
 import { ListaStockComponent } from './modules/stock/views/lista-stock/lista-stock.component';
 import { ListaClienteComponent } from './modules/clientes/views/lista-cliente/lista-cliente.component';
 import { AltaClienteComponent } from './modules/clientes/views/alta-cliente/alta-cliente.component';
@@ -34,7 +33,6 @@ const routes: Routes = [
     children: [
       { path: 'lista', component: ListaProduccionComponent },
       { path: 'alta', component: AltaProduccionComponent },
-      { path: 'detalle/:id', component: DetalleProduccionComponent }
     ]
   },
   {

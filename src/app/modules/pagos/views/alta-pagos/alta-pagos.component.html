@@ -1,40 +1,48 @@
-<app-encabezado>
-  Nuevo Pago
-</app-encabezado>
+<div class="contenedor-formulario">
 
-<form [formGroup]="formPago" (ngSubmit)="guardarPago()">
+  <h2 class="titulo-formulario">Alta de Pago</h2>
 
-  <mat-form-field appearance="outline" class="w-100">
-    <mat-label>Cliente</mat-label>
-    <mat-select formControlName="clienteId">
-      <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">
-        {{ cliente.nombre }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <form [formGroup]="formPago" (ngSubmit)="guardarPago()" class="formulario-alta">
 
-  <mat-form-field appearance="outline" class="w-100">
-    <mat-label>Monto total del pago</mat-label>
-    <input matInput type="number" formControlName="monto" />
-  </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Cliente</mat-label>
+      <mat-select formControlName="clienteId">
+        <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">
+          {{ cliente.nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <p *ngIf="montoRestante >= 0">💵 Monto restante por asignar: ${{ montoRestante }}</p>
-  <p *ngIf="montoRestante < 0" class="text-danger">⚠️ Excediste el monto ingresado</p>
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Monto total del pago</mat-label>
+      <input matInput type="number" formControlName="monto" />
+    </mat-form-field>
 
-  <div *ngIf="facturasCliente.length > 0">
-    <h4>Asignar a facturas pendientes:</h4>
-    <div formGroupName="facturas">
-      <div *ngFor="let f of facturasCliente">
-        <label>
-          {{ f.fecha ? (f.fecha.toDate() | date) : '—' }}
- - ${{ f.total }}
-          <input type="number" [formControlName]="f.id" min="0" max="{{ f.total - (f.pagosRecibidos || 0) }}" />
-        </label>
+    <p *ngIf="montoRestante >= 0">💵 Monto restante por asignar: ${{ montoRestante }}</p>
+    <p *ngIf="montoRestante < 0" class="text-error">⚠️ Excediste el monto ingresado</p>
+
+    <div *ngIf="facturasCliente.length > 0" class="facturas-asignacion">
+      <h4>Asignar a facturas pendientes:</h4>
+      <div formGroupName="facturas">
+        <div *ngFor="let f of facturasCliente" class="factura-item">
+          <label>
+            {{ f.fecha ? (f.fecha.toDate() | date) : '—' }} - ${{ f.total }}
+            <input
+              type="number"
+              [formControlName]="f.id"
+              min="0"
+              [max]="f.total - (f.pagosRecibidos || 0)"
+            />
+          </label>
+        </div>
       </div>
     </div>
-  </div>
 
-  <button mat-raised-button color="primary" type="submit" [disabled]="formPago.invalid || montoRestante < 0">
-    Registrar Pago
-  </button>
-</form>
+    <div class="botones">
+      <button mat-raised-button color="primary" type="submit" [disabled]="formPago.invalid || montoRestante < 0">
+        Registrar Pago
+      </button>
+    </div>
+
+  </form>
+</div>

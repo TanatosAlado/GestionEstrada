@@ -8,8 +8,24 @@
   display: flex;
   justify-content: flex-end;
   margin-bottom: 1rem;
+  gap: 1rem;
 }
 
 table {
   width: 100%;
+}
+
+.text-center {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  margin-top: 1rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.mt-8 {
+  margin-top: 2rem;
 }

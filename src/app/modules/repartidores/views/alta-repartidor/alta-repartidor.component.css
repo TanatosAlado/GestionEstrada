@@ -1,23 +1,37 @@
 form {
   max-width: 400px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 24px 20px;
   background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgb(0 0 0 / 0.12);
+  font-family: 'Roboto', sans-serif;
 }
 
 mat-form-field {
   width: 100%;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 div[style] {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: flex-end; /* Alinea botones a la derecha */
+  gap: 12px; /* Espacio consistente entre botones */
+  margin-top: 24px;
 }
 
 button {
-  min-width: 100px;
+  min-width: 110px;
+  font-weight: 600;
+  text-transform: none; /* Mantener texto normal, sin mayúsculas */
+}
+
+/* Opcional: darle un poco más de peso al botón principal */
+button[color="primary"] {
+  box-shadow: 0 3px 6px rgba(63, 81, 181, 0.3);
+  transition: box-shadow 0.3s ease;
+}
+
+button[color="primary"]:hover {
+  box-shadow: 0 6px 12px rgba(63, 81, 181, 0.5);
 }

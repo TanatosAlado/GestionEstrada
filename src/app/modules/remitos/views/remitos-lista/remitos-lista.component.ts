@@ -270,7 +270,7 @@ export class RemitosListaComponent implements OnInit {
       const semanas = this.remitosSeleccionados.length;
       let cantidadContratada = 1;
 
-      if ('cantidadContratada' in abono && typeof abono.cantidadContratada === 'number') {
+      if (abono && 'cantidadContratada' in abono && typeof abono.cantidadContratada === 'number') {
         cantidadContratada = abono.cantidadContratada;
       }
 

@@ -12,7 +12,8 @@ import { MatDialog } from '@angular/material/dialog';
 export class FacturasListaComponent {
 
   facturas: any[] = [];
-  columnas: string[] = ['cliente', 'fecha', 'total', 'saldo', 'estado', 'acciones'];
+
+  displayedColumns: string[] = ['cliente', 'fecha', 'total', 'saldo', 'estado', 'acciones'];
 
   constructor(private facturasService: FacturasService, private snackBar: MatSnackBar, private dialog: MatDialog) { }
 
@@ -28,7 +29,5 @@ verDetalle(factura: any) {
     data: factura
   });
 }
-
-
 
 }

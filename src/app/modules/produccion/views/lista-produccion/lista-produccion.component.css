@@ -1,43 +1,46 @@
-.contenedor {
-  max-width: 900px;
-  margin: 20px auto;
-  padding: 0 15px;
-  font-family: Arial, sans-serif;
+.contenedor-lista {
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: auto;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  font-family: 'Roboto', sans-serif;
 }
 
-h2 {
-  margin-bottom: 20px;
-  color: #3f51b5; /* color primario */
-  font-weight: 600;
-  text-align: center;
+.acciones {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
 }
 
-.btn-cargar {
-  margin-bottom: 15px;
-  display: block;
-  margin-left: auto; /* botón a la derecha */
-}
-
-.full-width-table {
+table {
   width: 100%;
   border-collapse: collapse;
+  background-color: #fafafa;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.mat-header-cell {
-  background-color: #e8eaf6; /* azul claro */
+/* Encabezado */
+table thead th {
+  background-color: #f1f3f4;
+  color: #333;
   font-weight: 600;
+  padding: 1rem;
   text-align: left;
-  padding: 12px 16px;
-  border-bottom: 2px solid #3f51b5;
+  border-bottom: 1px solid #e0e0e0;
 }
 
-.mat-cell {
-  padding: 12px 16px;
-  border-bottom: 1px solid #ccc;
+/* Celdas */
+table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e0e0e0;
   color: #444;
+  font-size: 0.95rem;
 }
 
-.mat-row:hover {
-  background-color: #f5f5f5;
-  cursor: pointer;
+/* Hover fila */
+table tr:hover {
+  background-color: #f9f9f9;
 }

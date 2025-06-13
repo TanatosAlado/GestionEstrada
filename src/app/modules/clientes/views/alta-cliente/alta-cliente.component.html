@@ -4,7 +4,7 @@
   <form [formGroup]="clienteForm">
 
     <!-- Tipo de cliente -->
-    <mat-form-field appearance="outline" class="full-width">
+    <mat-form-field appearance="outline" class="full-width distancia">
       <mat-label>Tipo de Cliente</mat-label>
       <mat-select formControlName="tipoCliente" required (selectionChange)="onTipoClienteChange()">
         <mat-option value="personal">Personal</mat-option>
