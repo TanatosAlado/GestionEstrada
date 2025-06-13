@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Firestore, collection, addDoc, updateDoc, doc, getFirestore, collectionData, getDocs } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, updateDoc, doc, getFirestore, collectionData, getDocs, query, where } from '@angular/fire/firestore';
 import { AbonoCliente } from '../../abonos/models/abonoCliente.model';
 import { AbonoGeneral } from '../../abonos/models/abonoGeneral.model';
 import { Producto } from '../../productos/models/producto.model';
+import { ResumenFactura } from '../models/resumenFactura.model';
 
 
 @Injectable({
@@ -53,5 +54,10 @@ async obtenerPreciosProductos(): Promise<Producto[]> {
   return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Producto[];
 }
 
+  obtenerFacturasPorCliente(clienteId: string): Observable<ResumenFactura[]> {
+    const ref = collection(this.firestore, 'Facturas');
+    const q = query(ref, where('clienteId', '==', clienteId));
+    return collectionData(q, { idField: 'id' }) as Observable<ResumenFactura[]>;
+  }
 
 }

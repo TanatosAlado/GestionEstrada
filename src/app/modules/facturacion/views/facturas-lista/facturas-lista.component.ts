@@ -12,7 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class FacturasListaComponent {
 
   facturas: any[] = [];
-  columnas: string[] = ['cliente', 'fecha', 'total', 'estado', 'acciones'];
+  columnas: string[] = ['cliente', 'fecha', 'total', 'saldo', 'estado', 'acciones'];
 
   constructor(private facturasService: FacturasService, private snackBar: MatSnackBar, private dialog: MatDialog) { }
 
@@ -21,16 +21,6 @@ export class FacturasListaComponent {
       this.facturas = data;
     });
   }
-
-  marcarComoAbonada(factura: any) {
-  // this.facturasService.actualizarFactura(factura.id, { estado: 'abonada' }).then(() => {
-  //   this.snackBar.open('Factura marcada como abonada', 'Cerrar', {
-  //     duration: 3000,
-  //     verticalPosition: 'top',
-  //     panelClass: ['snackbar-success']
-  //   });
-  // });
-}
 
 verDetalle(factura: any) {
   this.dialog.open(FacturaDetalleComponent, {

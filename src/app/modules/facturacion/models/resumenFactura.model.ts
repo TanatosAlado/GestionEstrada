@@ -14,5 +14,7 @@ export interface ResumenFactura {
     precioUnitario: number;
     subtotal: number;
   }[];
+  estado?: string;
   total: number;
+  pagosRecibidos?: number; // acumulado
 }

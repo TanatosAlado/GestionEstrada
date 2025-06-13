@@ -21,6 +21,7 @@ import { AbonosModule } from './modules/abonos/abonos.module';
 import { CargasModule } from './modules/cargas/cargas.module';
 import { RemitosModule } from './modules/remitos/remitos.module';
 import { FacturacionModule } from './modules/facturacion/facturacion.module';
+import { PagosModule } from './modules/pagos/pagos.module';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { FacturacionModule } from './modules/facturacion/facturacion.module';
     AbonosModule,
     CargasModule,
     RemitosModule,
-    FacturacionModule
+    FacturacionModule,
+    PagosModule
   ],
   providers: [],
   bootstrap: [AppComponent]

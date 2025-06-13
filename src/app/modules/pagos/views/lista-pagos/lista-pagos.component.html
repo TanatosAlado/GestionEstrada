@@ -1,0 +1,44 @@
+<app-encabezado>
+  Gestión de Pagos
+</app-encabezado>
+
+<div class="filtros">
+  <mat-form-field>
+    <mat-label>Filtrar por cliente</mat-label>
+    <mat-select [(ngModel)]="clienteSeleccionado" (selectionChange)="filtrarPagos()">
+      <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">
+        {{ cliente.razonSocial || (cliente.nombre + ' ' + cliente.apellido) }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-flat-button color="primary" (click)="abrirDialogoNuevoPago()">+ Registrar Pago</button>
+</div>
+
+<table mat-table [dataSource]="pagosFiltrados" class="mat-elevation-z1">
+
+  <ng-container matColumnDef="cliente">
+    <th mat-header-cell *matHeaderCellDef>Cliente</th>
+    <td mat-cell *matCellDef="let pago">{{ pago.clienteNombre }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="fecha">
+    <th mat-header-cell *matHeaderCellDef>Fecha</th>
+    <td mat-cell *matCellDef="let pago">{{ pago.fecha.toDate() | date }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="monto">
+    <th mat-header-cell *matHeaderCellDef>Monto</th>
+    <td mat-cell *matCellDef="let pago">${{ pago.monto }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="acciones">
+    <th mat-header-cell *matHeaderCellDef>Acciones</th>
+    <td mat-cell *matCellDef="let pago">
+      <button mat-button (click)="verDetalle(pago)">Ver</button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+  <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+</table>

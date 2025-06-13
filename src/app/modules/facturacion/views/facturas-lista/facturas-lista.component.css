@@ -1,8 +1,21 @@
-.badge-success {
-  color: green;
+.badge {
+  padding: 4px 8px;
+  border-radius: 4px;
   font-weight: bold;
+  color: white;
+  font-size: 0.85em;
+  display: inline-block;
 }
-.badge-pending {
-  color: orange;
-  font-weight: bold;
+
+.badge-abonada {
+  background-color: #4CAF50; /* verde */
+}
+
+.badge-parcial {
+  background-color: #FFC107; /* amarillo */
+  color: #000; /* negro para buen contraste */
+}
+
+.badge-pendiente {
+  background-color: #F44336; /* rojo */
 }

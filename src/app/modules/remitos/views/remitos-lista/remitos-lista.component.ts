@@ -153,6 +153,7 @@ export class RemitosListaComponent implements OnInit {
       remitos: remitosIds,
       total: resumen.total,            // 💲 Monto total
       estado: 'pendiente',             // 🔁 Estado inicial
+      pagosRecibidos: 0
     };
 
     this.facturasService.crearFactura(factura).then(() => {
@@ -305,7 +306,8 @@ export class RemitosListaComponent implements OnInit {
       clienteNombre,
       abono,
       productos: productosResumen,
-      total
+      
+      total,
     };
   }
 
