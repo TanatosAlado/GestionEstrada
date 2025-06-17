@@ -1,40 +1,52 @@
-.contenido-modal {
-  max-height: 70vh;
+.modal-contenedor {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto', sans-serif;
+  overflow: hidden;
+}
+
+.modal-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #eee;
+  background-color: #f5f5f5;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.modal-body {
+  padding: 1.5rem;
+  max-height: 60vh;
   overflow-y: auto;
-  padding-right: 12px;
-  padding-left: 4px;
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.full-width {
-  width: 100%;
-}
-
-/* Mejora de separación y orden en los botones */
-mat-dialog-actions {
+.modal-footer {
   padding: 1rem 1.5rem;
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
-  background-color: #f8f9fa;
-  border-top: 1px solid #e0e0e0;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  gap: 1rem;
+  border-top: 1px solid #eee;
+  background-color: #fafafa;
 }
 
-/* Mejora visual de los mat-form-field */
+.campo {
+  width: 100%;
+}
+
 mat-form-field {
   background-color: #fff;
   border-radius: 6px;
-}
-
-/* Opcional: más elegante aún con sombra sutil */
-mat-form-field.mat-form-field {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.distancia{
-  margin-top: 25px;
 }

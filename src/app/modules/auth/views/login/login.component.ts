@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { Usuario } from '../../models/usuario.model';
-import { LoginRequest } from '../../models/loginRequest.model';
-
+import { UsuarioInterno } from 'src/app/modules/usuarios/models/usuarioInterno.model';
+import { UsuarioActualService } from 'src/app/shared/services/usuario-actual.service';
 
 @Component({
   selector: 'app-login',
@@ -11,36 +10,25 @@ import { LoginRequest } from '../../models/loginRequest.model';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-
-   usuario: string = '';
+  usuario: string = '';
   contrasena: string = '';
-  loginFail: boolean = false; // Variable para manejar el error de login
-  readonly CONTRASENA_DEFAULT: string = 'Dolzani123'; // Contraseña por defecto para el cliente
+  loginFail: boolean = false;
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService, private usuarioActualService: UsuarioActualService) { }
 
-  onSubmit() {
-        if (this.usuario && this.contrasena) {
-      const ingresante: LoginRequest = new LoginRequest(this.usuario, this.contrasena);
-      this.authService.getUsuarioByLogin(ingresante).subscribe((usuario: Usuario | null) => {
-        if (usuario) {
-          this.router.navigate(['/gestiones']);
-        } else {
-          this.loginFail = true;
-        }
-      });
+  async onSubmit() {
+    if (this.usuario && this.contrasena) {
+      const usuarioInterno = await this.authService.login(this.usuario, this.contrasena);
+      if (usuarioInterno) {
+        this.usuarioActualService.setUsuarioActual(usuarioInterno);
+        this.router.navigate(['/gestiones']);
+      } else {
+        this.loginFail = true;
+      }
     }
-}
-
-
-
-  // Método para abrir el modal de registro
-  abrirRegistro() {
-    
   }
 
   resetLoginFail(): void {
     this.loginFail = false;
   }
-
 }

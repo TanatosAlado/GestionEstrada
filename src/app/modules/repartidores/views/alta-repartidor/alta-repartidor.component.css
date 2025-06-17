@@ -1,37 +1,49 @@
-form {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 24px 20px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 3px 12px rgb(0 0 0 / 0.12);
+.alta-repartidor-contenedor {
+  max-width: 440px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   font-family: 'Roboto', sans-serif;
+}
+
+.form-titulo {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.repartidor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 mat-form-field {
   width: 100%;
-  margin-bottom: 20px;
 }
 
-div[style] {
+.botones {
   display: flex;
-  justify-content: flex-end; /* Alinea botones a la derecha */
-  gap: 12px; /* Espacio consistente entre botones */
-  margin-top: 24px;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 12px;
 }
 
 button {
   min-width: 110px;
   font-weight: 600;
-  text-transform: none; /* Mantener texto normal, sin mayúsculas */
+  text-transform: none;
 }
 
-/* Opcional: darle un poco más de peso al botón principal */
 button[color="primary"] {
-  box-shadow: 0 3px 6px rgba(63, 81, 181, 0.3);
+  box-shadow: 0 3px 6px rgba(63, 81, 181, 0.25);
   transition: box-shadow 0.3s ease;
 }
 
 button[color="primary"]:hover {
-  box-shadow: 0 6px 12px rgba(63, 81, 181, 0.5);
+  box-shadow: 0 6px 12px rgba(63, 81, 181, 0.4);
 }

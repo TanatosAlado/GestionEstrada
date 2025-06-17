@@ -121,7 +121,9 @@ async guardarCarga() {
     return producto.tipo.charAt(0).toUpperCase() + producto.tipo.slice(1);
   }
 
-
+  cerrar(): void {
+    this.dialogRef.close();
+  }
 
 
 }

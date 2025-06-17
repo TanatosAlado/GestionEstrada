@@ -1,4 +1,14 @@
-h4 {
-    text-align: center;
-    background-color: #a2c149;
+.app-footer {
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 0.9rem;
+  color: #fff; /* texto blanco */
+  font-family: 'Roboto', sans-serif;
+  background-color: #a2c149;
+  border-top: 1px solid rgba(255, 255, 255, 0.3); /* línea más suave */
+  margin-top: 2rem;
+}
+
+.app-footer strong {
+  color: #4c681f; /* verde más oscuro */
 }

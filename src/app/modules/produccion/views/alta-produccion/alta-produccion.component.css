@@ -1,22 +1,78 @@
-.form-container {
+.modal-contenedor {
+  max-width: 600px;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.modal-header h2 {
+  margin: 0;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1rem;
 }
 
 .form-row {
   display: flex;
-  flex-wrap: wrap;
   gap: 16px;
+  flex-wrap: wrap;
 }
 
-.full-width {
+.campo {
   flex: 1 1 100%;
+}
+
+.seccion-subtitulo {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
+  color: #555;
+}
+
+.detalle-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
 }
 
 .detalle-item {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 8px;
+  gap: 12px;
+}
+
+.producto-select {
+  flex: 1;
+}
+
+.cantidad-input {
+  width: 100px;
+}
+
+.agregar-btn {
+  margin-top: 0.5rem;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 2rem;
 }

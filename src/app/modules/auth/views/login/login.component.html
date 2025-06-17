@@ -9,14 +9,13 @@
     <mat-form-field appearance="outline" color="accent">
       <mat-label>Usuario</mat-label>
       <input matInput type="text" name="usuario" [(ngModel)]="usuario" (ngModelChange)="resetLoginFail()" required />
-      <button *ngIf="usuario" matSuffix mat-icon-button (click)="usuario=''">
-        <mat-icon style="color: #666;">close</mat-icon>
-      </button>
     </mat-form-field>
+
 
     <mat-form-field appearance="outline" color="accent">
       <mat-label>Contraseña</mat-label>
-      <input matInput type="password" name="contrasena" [(ngModel)]="contrasena" (ngModelChange)="resetLoginFail()" required />
+      <input matInput type="password" name="contrasena" [(ngModel)]="contrasena" (ngModelChange)="resetLoginFail()"
+        required />
       <button *ngIf="contrasena" matSuffix mat-icon-button (click)="contrasena=''">
         <mat-icon style="color: #666;">close</mat-icon>
       </button>

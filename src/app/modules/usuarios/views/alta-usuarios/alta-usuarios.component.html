@@ -1,0 +1,38 @@
+<div class="contenedor-alta-usuario">
+
+  <h2 mat-dialog-title>Alta de Usuario Interno</h2>
+
+  <form [formGroup]="altaForm" (ngSubmit)="crearUsuario()" mat-dialog-content>
+
+    <mat-form-field appearance="outline" class="campo">
+      <mat-label>Nombre de Usuario</mat-label>
+      <input matInput type="text" formControlName="username" />
+    </mat-form-field>
+
+
+    <mat-form-field appearance="outline" class="campo">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="usuario" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="campo">
+      <mat-label>Contraseña</mat-label>
+      <input matInput type="password" formControlName="clave" />
+    </mat-form-field>
+
+    <mat-label>Accesos</mat-label>
+    <mat-selection-list formControlName="accesos">
+      <mat-list-option *ngFor="let modulo of modulosDisponibles" [value]="modulo">
+        {{ modulo | titlecase }}
+      </mat-list-option>
+    </mat-selection-list>
+
+  </form>
+  <mat-dialog-actions align="end" style="margin-top: 24px;">
+    <button mat-button (click)="cerrar()" type="button">Cerrar</button>
+    <button mat-raised-button color="primary" [disabled]="altaForm.invalid || creando" type="submit">
+      Crear Usuario
+    </button>
+  </mat-dialog-actions>
+
+</div>

@@ -68,6 +68,12 @@ export class GestionesComponent {
       descripcion: 'Gestión de facturas',
       icono: 'fa-solid fa-file-lines',
       ruta: '/facturas',
+    },
+    {
+      titulo: 'Usuarios',
+      descripcion: 'Gestión de usuarios',
+      icono: 'fa-solid fa-user',
+      ruta: '/usuarios',
     }
   ];
 

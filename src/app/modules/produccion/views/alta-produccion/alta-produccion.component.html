@@ -1,56 +1,71 @@
-<h2 mat-dialog-title>Registrar Producción</h2>
+<div class="modal-contenedor">
 
-<form [formGroup]="produccionForm" class="form-container" mat-dialog-content (ngSubmit)="guardar()">
-
-  <div class="form-row">
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Fecha</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="fecha" required>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-      <mat-error *ngIf="produccionForm.get('fecha')?.hasError('required')">La fecha es obligatoria</mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Operador</mat-label>
-      <input matInput formControlName="operador" placeholder="Nombre del operador" required>
-      <mat-error *ngIf="produccionForm.get('operador')?.hasError('required')">El operador es obligatorio</mat-error>
-    </mat-form-field>
+  <!-- ENCABEZADO -->
+  <div class="modal-header">
+    <h2>Registrar Producción</h2>
   </div>
 
-  <div formArrayName="detalle">
-    <div *ngFor="let item of detalle.controls; let i = index" [formGroupName]="i" class="detalle-item">
+  <!-- CUERPO -->
+  <div class="modal-body">
+    <form [formGroup]="produccionForm">
 
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Producto</mat-label>
-        <mat-select formControlName="productoId" required>
-          <mat-option *ngFor="let prod of tiposDisponibles" [value]="prod.id">
-            {{ prod.tipo }} - {{ prod.capacidad }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="item.get('productoId')?.hasError('required')">Seleccione un producto</mat-error>
-      </mat-form-field>
+      <!-- Fecha y Operador -->
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="campo">
+          <mat-label>Fecha</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fecha">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="produccionForm.get('fecha')?.hasError('required')">La fecha es obligatoria</mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="fill" style="width: 100px;">
-        <mat-label>Cantidad</mat-label>
-        <input type="number" matInput formControlName="cantidad" min="1" required>
-        <mat-error *ngIf="item.get('cantidad')?.hasError('min')">Debe ser al menos 1</mat-error>
-        <mat-error *ngIf="item.get('cantidad')?.hasError('required')">Ingrese cantidad</mat-error>
-      </mat-form-field>
+        <mat-form-field appearance="fill" class="campo">
+          <mat-label>Operador</mat-label>
+          <input matInput formControlName="operador" placeholder="Nombre del operador">
+          <mat-error *ngIf="produccionForm.get('operador')?.hasError('required')">El operador es obligatorio</mat-error>
+        </mat-form-field>
+      </div>
 
-      <button mat-icon-button color="warn" (click)="eliminarTipo(i)" *ngIf="detalle.length > 1" type="button" aria-label="Eliminar producto">
-        <mat-icon>delete</mat-icon>
+      <!-- Productos producidos -->
+      <h3 class="seccion-subtitulo">Productos producidos</h3>
+      <div formArrayName="detalle" class="detalle-lista">
+        <div *ngFor="let item of detalle.controls; let i = index" [formGroupName]="i" class="detalle-item">
+
+          <mat-form-field appearance="outline" class="producto-select">
+            <mat-label>Producto</mat-label>
+            <mat-select formControlName="productoId">
+              <mat-option *ngFor="let prod of tiposDisponibles" [value]="prod.id">
+                {{ prod.tipo }} - {{ prod.capacidad }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="item.get('productoId')?.hasError('required')">Seleccione un producto</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="cantidad-input">
+            <mat-label>Cantidad</mat-label>
+            <input type="number" matInput formControlName="cantidad" min="1">
+            <mat-error *ngIf="item.get('cantidad')?.hasError('min')">Mínimo 1</mat-error>
+            <mat-error *ngIf="item.get('cantidad')?.hasError('required')">Ingrese cantidad</mat-error>
+          </mat-form-field>
+
+          <button mat-icon-button color="warn" (click)="eliminarTipo(i)" *ngIf="detalle.length > 1" type="button" aria-label="Eliminar producto">
+            <mat-icon>delete</mat-icon>
+          </button>
+
+        </div>
+      </div>
+
+      <button mat-stroked-button color="primary" (click)="agregarTipo()" type="button" class="agregar-btn">
+        + Agregar producto
       </button>
-    </div>
+
+    </form>
   </div>
 
-  <button mat-stroked-button color="primary" (click)="agregarTipo()" type="button" style="align-self: flex-start; margin-top: 8px;">
-    + Agregar producto
-  </button>
+  <!-- ACCIONES -->
+  <div class="modal-footer">
+    <button mat-button type="button" (click)="cerrar()">Cancelar</button>
+    <button mat-raised-button color="primary" [disabled]="produccionForm.invalid" (click)="guardar()">Guardar Producción</button>
+  </div>
 
-</form>
-
-<mat-dialog-actions align="end" style="margin-top: 24px;">
-  <button mat-button (click)="cerrar()" type="button">Cancelar</button>
-  <button mat-raised-button color="primary" [disabled]="produccionForm.invalid" type="submit">Guardar Producción</button>
-</mat-dialog-actions>
+</div>

@@ -1,35 +1,57 @@
-.carga-form {
+/* Estructura base */
+.modal-contenedor {
+  width: 100%;
   max-width: 600px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
   font-family: 'Roboto', sans-serif;
+  overflow: hidden;
 }
 
-.full-width {
-  width: 100%;
-  margin-bottom: 1.25rem;
+.modal-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #eee;
+  background-color: #f5f5f5;
 }
 
-/* Título */
-h2 {
-  text-align: center;
-  font-size: 1.6rem;
-  font-weight: 600;
-  margin-bottom: 2rem;
-}
-
-/* Subtítulo */
-h3 {
-  font-size: 1.2rem;
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
   font-weight: 500;
+  color: #333;
+}
+
+.modal-body {
+  padding: 1.5rem;
+  max-height: 60vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modal-footer {
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  border-top: 1px solid #eee;
+  background-color: #fafafa;
+}
+
+.campo {
+  width: 100%;
+}
+
+.seccion-subtitulo {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-top: 1rem;
   margin-bottom: 0.5rem;
   color: #444;
-  margin-top: 1.5rem;
 }
 
 /* Lista de productos */
@@ -68,14 +90,4 @@ h3 {
   width: 90px;
   min-width: 80px;
   margin-left: 1rem;
-}
-
-/* Botón Guardar */
-button[type="submit"] {
-  align-self: flex-end;
-  margin-top: 2rem;
-  padding: 10px 28px;
-  font-size: 0.95rem;
-  font-weight: 500;
-  border-radius: 6px;
 }

@@ -22,6 +22,7 @@ import { CargasModule } from './modules/cargas/cargas.module';
 import { RemitosModule } from './modules/remitos/remitos.module';
 import { FacturacionModule } from './modules/facturacion/facturacion.module';
 import { PagosModule } from './modules/pagos/pagos.module';
+import { UsuariosModule } from './modules/usuarios/usuarios.module';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { PagosModule } from './modules/pagos/pagos.module';
     CargasModule,
     RemitosModule,
     FacturacionModule,
-    PagosModule
+    PagosModule,
+    UsuariosModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -16,6 +16,7 @@ import { ListaAbonosComponent } from './modules/abonos/views/lista-abono/lista-a
 import { RemitosListaComponent } from './modules/remitos/views/remitos-lista/remitos-lista.component';
 import { FacturasListaComponent } from './modules/facturacion/views/facturas-lista/facturas-lista.component';
 import { ListaPagosComponent } from './modules/pagos/views/lista-pagos/lista-pagos.component';
+import { ListaUsuariosComponent } from './modules/usuarios/views/lista-usuarios/lista-usuarios.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' }, // cambio de prefix a full
@@ -96,6 +97,13 @@ const routes: Routes = [
     component: ListaPagosComponent,
     children: [
       { path: 'listaP', component: ListaPagosComponent },
+    ]
+  },
+      {
+    path: 'usuarios',
+    component: ListaUsuariosComponent,
+    children: [
+      { path: 'listaU', component: ListaUsuariosComponent },
     ]
   },
 ]  
